@@ -1,0 +1,14 @@
+[
+    {
+        "method": "Idle"
+    },
+    {
+        "method": "Snapping"
+    },
+    {
+        "method": "Constant"
+    },
+    {
+        "method": "Scanning"
+    }
+]

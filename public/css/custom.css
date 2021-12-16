@@ -1,0 +1,20 @@
+.bg-base{
+    background-color: #FF0000 !important;
+}
+
+.border-doted{
+    border-style: dotted;
+    color:#BFBFBF;
+}
+
+.border-16{
+    border-radius: 16px;
+}
+
+.left-50{
+    left: 50%;
+}
+
+.filter-dark{
+    filter: brightness(70%);
+}
