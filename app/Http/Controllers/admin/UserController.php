@@ -26,7 +26,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::whereHas("roles", function($q){ $q->where("name", "user"); })->get();
-        return view('admin.user', compact('users'));
+        return view('admin.user.index', compact('users'));
     }
 
     /**
@@ -47,13 +47,6 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-            'confirm-password' => 'required',
-        ]);
-
         try {
             if($this->userRepository->CheckIfEmailExist($request['email']) || $request['password'] != $request['confirm-password']){
                 return redirect()->back();
@@ -62,9 +55,9 @@ class UserController extends Controller
             $request['password'] = Hash::make($request['password']);
 
             DB::beginTransaction();
-            $create = $this->userRepository->storeUser($request->except('confirm-password'));
+            session()->flash('response', $this->userRepository->storeUser($request->except('confirm-password')));
             DB::commit();
-            return redirect()->back();
+            return redirect()->back()->with('success','Berhasil Menambahkan User');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -92,7 +85,8 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = $this->userRepository->getUserById($id);
+        return view('admin.user.edit',compact('user'));
     }
 
     /**
@@ -104,7 +98,25 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        try {
+            DB::beginTransaction();
+            if($request['password'] != null && $request['confirm-password'] != null){
+                if($request['password'] == $request['confirm-password']){
+                    session()->flash('response', $this->userRepository->changeUserData($id,$request->except('confirm-password')));
+                }else{
+                    return redirect()->back();
+                }
+            }else{
+                session()->flash('response', $this->userRepository->changeUserData($id,$request->except(['password','confirm-password'])));
+            }
+            DB::commit();
+            return redirect()->back()->with('success','Berhasil Mengubah Data User');
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors([
+                'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
+            ]);
+        }   
     }
 
     /**

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use App\Repositories\UserRepository;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -27,23 +29,54 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = RouteServiceProvider::HOME;
+
+    protected $userRepository;
 
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(UserRepository $userRepository)
     {
+        $this->userRepository = $userRepository;
         $this->middleware('guest')->except('logout');
     }
 
-    protected function authenticated(Request $request, $user){
-        if($user->hasRole('Admin')){
-            return redirect()->route('admin.dashboard');
-        }else{
-            return redirect()->route('user.machine-list');
+    protected function authenticated(Request $request){
+        try {
+            $credentials = $request->only('email', 'password');
+            $remember = false;
+            
+            if(!$this->userRepository->getByEmail($credentials['email'])){
+                return back()->withInput()->withErrors([
+                    'email' => 'Email Salah!',
+                ]);
+            }
+
+            if (Auth::attempt($credentials, $remember)) {
+                $request->session()->regenerate();
+                session()->put('user', [
+                    'id' => Auth::user()->id,
+                    'email' => Auth::user()->email,
+                    'name' => Auth::user()->name,
+                    'role' => Auth::user()->getRoleNames()[0]
+                ]);   
+                if(Auth::user()->hasRole('Admin')){
+                    return redirect()->route('admin.dashboard');
+                }else{
+                    return redirect()->route('user.dashboard');
+                }
+            }
+            
+            return back()->withInput()->withErrors([
+                'password' => 'Password Salah !',
+            ]);
+        } catch (ModelNotFoundException $exception) {
+            return redirect()->back()->withInput()->withErrors([
+                'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
+            ]);
         }
+        
     }
 }

@@ -31,6 +31,10 @@ class MachineRepository
         return $this->machine->create($machine);
     }
 
+    public function updateMachine($machine_id,$data){
+        return $this->machine->find($machine_id)->update($data);
+    }
+
     public function deleteMachine($machine_id){
         $machine =  $this->machine->find($machine_id);
         Storage::delete('/public/machine_image/' . $machine['image']);

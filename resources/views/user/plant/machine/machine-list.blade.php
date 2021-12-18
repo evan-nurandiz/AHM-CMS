@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 
 @section('style')
     <style>
@@ -10,27 +10,30 @@
             line-clamp: 3; 
             -webkit-box-orient: vertical;
         }
+
+        #dashboard .machine-wrapper{
+            height:126px;
+            max-height:126px;
+        }
     </style>
 @endsection
 
 @section('content')
 	<main id="dashboard">
         <div class="row">
-            <div class="col-12 py-4 bg-white">
+            <div class="col-12 col-lg-12 py-4 bg-white">
                 <div class="d-flex justify-content-between">
                     <h3>List Mesin</h4>
-                    <a href="{{route('admin.machine-create')}}">
-                        <button type="button" class="btn bg-base rounded text-white">Tambah Mesin</button>
-                    </a>
-                    
                 </div>
                 <div class="row gap-2 w-100 mx-0">
                     @foreach($machines as $machine)
-                    <div class="col-3">
-                        <a href="{{route('admin.machine-show', ['list_mesin'=>$machine['id']])}}">
-                            <div class="row align-items-center border rounded-md p-2 shadow">
+                    <div class="col-12 col-lg-3 mt-4 mt-lg-0 machine-wrapper h-lg-100">
+                        <a href="{{route('user.plant-machine-detail',
+                        ['plant_number' => $plant_number,'machine_id' => $machine['id'] ]
+                        )}}">
+                            <div class="row align-items-center border rounded-md p-2 shadow h-100">
                                 <div class="col-4">
-                                    <img src="/image/icon/engine-icon.png" alt="" class="w-100">
+                                    <img src="{{$machine['image'] ? asset('storage/machine_image/'.$machine['image']) : '/image/icon/engine-icon.png'}}" alt="" class="w-100">
                                 </div>
                                 <div class="col-8">
                                     <h4>{{$machine['type']}}</h4>
@@ -41,6 +44,9 @@
                         </a>
                     </div>
                     @endforeach
+                    <div class="d-flex mt-4 justify-content-center">
+                        {!! $machines->links() !!}
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,3 +18,11 @@
 .filter-dark{
     filter: brightness(70%);
 }
+
+.bg-gray{
+    background-color:  #005b96 !important;
+}
+
+#required{
+    color: red;
+}

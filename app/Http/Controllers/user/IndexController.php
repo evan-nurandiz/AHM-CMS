@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\user;
 
+
 use App\Helpers\ExtractJsonHelpers;
 use App\Repositories\MachineRepository;
 use App\Repositories\MachineProblemRepository;
@@ -21,19 +22,15 @@ class IndexController extends Controller
     }
 
     public function index(){
-        $machines =  $this->machineRepository->getAllMachine();
-        return view('user.machine',compact('machines'));
+        $machines =  $this->machineRepository->countAllMachine();
+        $plant = count(ExtractJsonHelpers::getPlantList());
+
+        $data = [
+            'machines' => $machines,
+            'plant' => $plant,
+        ];
+
+        return view('user.dashboard',compact('data'));
     }
 
-    public function ShowMachineDetail($id){
-        $machine = $this->machineRepository->getMachineById($id);
-        $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($id);
-        return view('user.machine-detail', compact('machine','machineProblems'));
-    }
-
-    public function ShowMachineProblem($id, $problem_id){
-        $machineProblem = $this->machineProblemRepository->getMachineProblemById($problem_id);
-        $machine = $this->machineProblemRepository->getMachineProblemInfo($problem_id);
-        return view('user.machine-problem',compact('machineProblem','machine'));
-    }
 }

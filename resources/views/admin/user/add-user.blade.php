@@ -15,20 +15,28 @@
                     <form action="{{route('admin.dashboard-user-create.action')}}" method="post">
                         @csrf
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Name</label>
+                            <label for="exampleInputEmail1" class="form-label">Name  <span id="required">*</span></label>
                             <input type="text" class="form-control" name="name" required id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputEmail1" class="form-label">Email address</label>
+                            <label for="exampleInputEmail1" class="form-label">Email address  <span id="required">*</span></label>
                             <input type="email" class="form-control" name="email" required id="exampleInputEmail1" aria-describedby="emailHelp">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" required class="form-label">Password</label>
+                            <label for="exampleInputPassword1" required class="form-label">Password  <span id="required">*</span></label>
                             <input type="password" class="form-control" required name="password" id="exampleInputPassword1">
                         </div>
                         <div class="mb-3">
-                            <label for="exampleInputPassword1" required class="form-label">Confirm Password</label>
+                            <label for="exampleInputPassword1" required class="form-label">Confirm Password  <span id="required">*</span></label>
                             <input type="password" class="form-control" required name="confirm-password" id="exampleInputPassword1">
+                        </div>
+                        <div class="mb-3">
+                            <label for="inputState">Role  <span id="required">*</span></label>
+                            <select id="inputState" class="form-control" required name="role">
+                                <option selected>Choose</option>
+                                <option value="admin">Admin</option>
+                                <option value="user">User</option>
+                            </select>
                         </div>
                         <button type="submit" class="btn btn-primary">Submit</button>
                     </form>

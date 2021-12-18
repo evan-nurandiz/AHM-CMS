@@ -21,6 +21,7 @@
     <!-- Custom CSS -->
     <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
+    <link rel="shortcut icon" href="/logo.ico">
     @yield('style')
 </head>
 
@@ -42,7 +43,7 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <header class="topbar bg-base" data-navbarbg="skin5">
+        <header class="topbar bg-gray" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header py-2" data-logobg="skin6">
                     <!-- ============================================================== -->
@@ -52,7 +53,7 @@
                         <!-- Logo icon -->
                         <b class="logo-icon w-75">
                             <!-- Dark Logo icon -->
-                            <img src="/image/logo.png" alt="homepage" class="w-100"/>
+                            <img src="/image/logo-astra-internasional.jpg" alt="homepage" class="w-100"/>
                         </b>
                     </a>
                     <!-- ============================================================== -->
@@ -67,7 +68,7 @@
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse collapse bg-base" id="navbarSupportedContent" data-navbarbg="skin5">
+                <div class="navbar-collapse collapse bg-gray" id="navbarSupportedContent" data-navbarbg="skin5">
                    
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
@@ -75,8 +76,8 @@
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li>
                             <a class="profile-pic" href="#">
-                                <img src="https://ui-avatars.com/api/?name=John+Doe" alt="user-img" width="36"
-                                    class="img-circle">
+                                <img src="/image/logo.png" alt="user-img" width="120"
+                                    class="">
                             </a>
                         </li>
                     </ul>
@@ -103,11 +104,11 @@
                                 <span class="hide-menu">List Mesin</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href=""
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.plant')}}"
                                 aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span class="hide-menu">Profile</span>
+                                <i class="fas fa-building" aria-hidden="true"></i>
+                                <span class="hide-menu">List Plant</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -135,6 +136,7 @@
         <!-- ============================================================== -->
         <div class="page-wrapper">
             <div class="container-fluid">
+        
                 @yield('content')
             </div>
         </div>

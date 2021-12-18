@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\machineProblem;
 use App\Helpers\ExtractJsonHelpers;
+use App\Models\Helper;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Repositories\MachineRepository;
@@ -55,17 +56,13 @@ class MachineController extends Controller
     {        
         try {
             if($request->hasFile('image_temp')){
-                $image = $request->file('image_temp');
-                $filename = $image->getClientOriginalName();
-                $filenames = date('his').$filename;
-                $image->storeAs('machine_image/',$filenames,'public');    
-                $request['image'] = $filenames;
+                Helper::uploadContent('image', 'image_temp','machine_image/','machines','image');   
             }
 
             DB::beginTransaction();
             $create = $this->machineRepository->storeMachine($request->except('image_temp'));
             DB::commit();
-            return redirect()->route('admin.plant-machine-list',['plant_number' => $plant_number]);
+            return redirect()->route('admin.plant-machine-list',['plant_number' => $plant_number])->with('success','Berhasil Menambahkan Mesin');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -80,10 +77,10 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($plant_id,$id)
+    public function show($plant_id,$machine_id)
     {
-        $machine = $this->machineRepository->getMachineById($id);
-        $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($id);
+        $machine = $this->machineRepository->getMachineById($machine_id);
+        $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($machine_id);
 
         $data = [
             'machine' => $machine,
@@ -100,10 +97,17 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($plant_id,$machine_id)
     {
-        $machine = $this->machineRepository->getMachineById($id);
-        return view('admin.machine-add', compact('machine'));
+        $machine = $this->machineRepository->getMachineById($machine_id);
+
+        $data = [
+            'machine' => $machine,
+            'plant_id' => $plant_id,
+            'machine_id' => $machine_id
+        ];
+
+        return view('admin.plant.machine.machine-edit', compact('data'));
     }
 
     /**
@@ -113,24 +117,19 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $plant_id, $machine_id)
     {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
+        $machine = $this->machineRepository->getMachineById($machine_id);
         try {
+            if($request->hasFile('image_temp')){
+                Storage::delete('/public/machine_image/' . $machine['image']);
+                Helper::uploadContent('image', 'image_temp','machine_image/','machines','image');   
+            }
+
             DB::beginTransaction();
-            $this->machineRepository->deleteMachine($id);
+            session()->flash('response', $this->machineRepository->updateMachine($machine_id, $request->all()));
             DB::commit();
-            return redirect()->route('admin.machine');
+            return redirect()->back()->with('success','Berhasil Mengubah Mesin');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -139,101 +138,26 @@ class MachineController extends Controller
         }
     }
 
-    public function AddMachineProblem($id){
-        $symton_noises = ExtractJsonHelpers::getSymtonNoise();
-        $cause_parts = ExtractJsonHelpers::getCausingPart();
-        $breakdown_parts = ExtractJsonHelpers::getBreakdownPart();
-        $methods = ExtractJsonHelpers::getMethodList();
-        $at_gears = ExtractJsonHelpers::getAtgearPart();
-        return view('admin.addEngineProblem',compact('symton_noises','cause_parts','breakdown_parts','methods','at_gears','id'));
-    }
-
-    public function StoreMachineProblem(Request $request, $id){
-        $request->validate([
-            'symton_noise' => 'required',
-            'causing_part' => 'required',
-            'method' => 'required',
-            'image_temp' => 'required',
-            'sound_temp' => 'required'
-        ]);
-
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($plant_id,$machine_id)
+    {
         try {
-            if($request->hasFile('image_temp')){
-                $image = $request->file('image_temp');
-                $filename = $image->getClientOriginalName();
-                $filenames = date('his').$filename;
-                $image->storeAs('machine_diagram/',$filenames,'public');    
-                $request['diagram_image'] = $filenames;
-            }
-
-            if($request->hasFile('sound_temp')){
-                $sound = $request->file('sound_temp');
-                $soundname = $sound->getClientOriginalName();
-                $soundname = date('his').$soundname;
-                $sound->storeAs('machine_sound/',$soundname,'public');    
-                $request['sound'] = $soundname;
-            }
-
-            $request['machine_id'] = $id;
-
             DB::beginTransaction();
-            $create = machineProblem::create($request->except(['sound_temp','image_temp']));
+            $this->machineRepository->deleteMachine($machine_id);
             DB::commit();
-            return redirect()->back();
+            return redirect()->route('admin.plant-machine-list',[
+                'plant_number' => $plant_id
+            ])->with('success','Berhasil Menghapus Mesin');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
                 'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
             ]);
-        }    
-    }
-
-    public function ShowMachineProblem($id){
-        $machineProblem = $this->machineProblemRepository->getMachineProblemById($id);
-        $machine = $this->machineProblemRepository->getMachineProblemInfo($id);
-        return view('admin.machine-problem.show',compact('machineProblem','machine'));
-    }
-
-    public function EditMachineProblem($id){
-        $machineProblem = $this->machineProblemRepository->getMachineProblemById($id);
-        $symton_noises = ExtractJsonHelpers::getSymtonNoise();
-        $cause_parts = ExtractJsonHelpers::getCausingPart();
-        $breakdown_parts = ExtractJsonHelpers::getBreakdownPart();
-        $methods = ExtractJsonHelpers::getMethodList();
-        $at_gears = ExtractJsonHelpers::getAtgearPart();
-        return view('admin.machine-problem.edit',compact('symton_noises','cause_parts','breakdown_parts','methods','at_gears','id','machineProblem'));
-    }
-
-    public function updateMachineProblem(Request $request, $id){
-        try {
-            $machineProblem = machineProblem::find($id);
-            if($request->hasFile('image_temp')){
-                $image = $request->file('image_temp');
-                $filename = $image->getClientOriginalName();
-                $filenames = date('his').$filename;
-                $image->storeAs('machine_diagram/',$filenames,'public');    
-                $request['diagram_image'] = $filenames;
-                Storage::delete('/public/machine_diagram/' . $machineProblem['diagram_image']);
-            }
-
-            if($request->hasFile('sound_temp')){
-                $sound = $request->file('sound_temp');
-                $soundname = $sound->getClientOriginalName();
-                $soundname = date('his').$soundname;
-                $sound->storeAs('machine_sound/',$soundname,'public');    
-                $request['sound'] = $soundname;
-                Storage::delete('/public/machine_sound/' . $machineProblem['sound']);
-            }
-
-            DB::beginTransaction();
-            $update = $machineProblem->update($request->except(['sound_temp','image_temp']));
-            DB::commit();
-            return redirect()->back();
-        } catch (ModelNotFoundException $exception) {
-            DB::rollBack();
-            return redirect()->back()->withInput()->withErrors([
-                'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
-            ]);
-        }    
+        }
     }
 }

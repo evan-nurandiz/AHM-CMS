@@ -3,7 +3,13 @@
 @section('style')
     <style>
         .upload-container{
-            height: 300px;
+            min-height: 300px;
+        }
+
+        @media only screen and (max-width: 800px) {
+            #dashboard #input-image-preview, #dashboard #sound-priview{
+                height:200px
+            }
         }
     </style>
 @endsection
@@ -12,11 +18,11 @@
 	<main id="dashboard">
         <div class="col-12 bg-white p-4">
             <h2>Add Machine Problem</h2>
-            <div class="row my-4">
-                <div class="col-2">
+            <div class="row justify-content-center my-4">
+                <div class="col-6 col-lg-2 mb-4 mb-lg-0">
                     <img src="/image/icon/engine-icon.png" alt="" class="w-100" id="image">
                 </div>
-                <div class="col-10">
+                <div class="col-12 col-lg-10">
                     <h3>K45 Engine</h3>
                     <p class="description">
                         Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil hic cumque consequatur fugiat. Delectus enim a 
@@ -25,26 +31,29 @@
                     </p>
                 </div>
             </div>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="{{route('admin.plant-machine-add-noise.store',[
+                'machine_id' => $data['machine_id'],
+                'plant_number' => $data['plant_id']
+            ])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group mb-4">
-                    <p>Symton Noise</p>
+                    <p>Symton Noise <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         @foreach($data['symton_noises'] as $symton_noise)
                             <option value="{{$symton_noise['symton_name']}}" id="symton-noise-input" for="symton_noise">{{$symton_noise['symton_name']}}</option>
                         @endforeach
-                        <input type="hidden" name="symton_noise" id="symton_noise">
+                        <input type="hidden" name="symton_noise" required id="symton_noise">
                     </select>
                 </div>
                 <div class="form-group mb-4" >
-                    <p>Part Penyebab</p>
+                    <p>Part Penyebab <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         @foreach($data['cause_parts'] as $cause_part)
                         <option value="{{$cause_part['causing_part']}}" id="causing-part-input">{{$cause_part['causing_part']}}</option>
                         @endforeach
-                        <input type="hidden" name="causing_part" id="causing-part">
+                        <input type="hidden" name="causing_part" required id="causing-part">
                     </select>
                 </div>
                 <div class="form-group mb-4 d-none" id="breakdownpart">
@@ -58,13 +67,13 @@
                     <input type="hidden" name="breakdown_part" id="breakdown-part">
                 </div>
                 <div class="form-group mb-4" >
-                    <p>Method</p>
+                    <p>Method <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         @foreach($data['methods'] as $method)
                             <option value="{{$method['method']}}" id="method-input">{{$method['method']}}</option>
                         @endforeach
-                        <input type="hidden" name="method" id="method">
+                        <input type="hidden" name="method" required id="method">
                     </select>
                 </div>
                 <div class="form-group mb-4 d-none" id="at-gear-wrap">
@@ -78,15 +87,15 @@
                     <input type="hidden" name="at_gear" id="at-gear">
                 </div>
                 <div class="upload-container justify-content-between row mx-0 mb-5">
-                    <div class="col-5 rounded border-doted p-4 d-flex align-items-center justify-content-center" id="input-image-preview">
-                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto Mesin</label>
-                        <input type="file" id="file" class="d-none" name="image_temp">
+                    <div class="col-12 mb-4 mb-lg-0 col-lg-5 rounded border-doted p-4 d-flex align-items-center justify-content-center" id="input-image-preview">
+                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto Mesin </label>
+                        <input type="file" id="file" class="d-none" required name="image_temp">
                     </div>
-                    <div class="col-5 rounded border-doted p-4 ">
+                    <div class="col-12 col-lg-5 rounded border-doted p-4 " id="sound-priview">
                         <audio id="sound" controls class="d-none"></audio>
-                        <div class="d-flex align-items-center justify-content-center h-100">
+                        <div class="d-flex align-items-center justify-content-center h-100" >
                             <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="sound-input" >Upload Suara Mesin</label>
-                            <input type="file" id="sound-input" class="d-none" name="sound_temp">
+                            <input type="file" id="sound-input" class="d-none" required name="sound_temp">
                         </div>
                     </div>
                 </div>

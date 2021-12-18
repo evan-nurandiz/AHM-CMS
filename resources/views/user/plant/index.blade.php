@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 
 @section('style')
     <style>
@@ -21,7 +21,7 @@
                 <div class="row mx-0">
                     @foreach($plants as $plant)
                     <div class="col-12 plant mb-5 position-relative">
-                        <a href="{{route('admin.plant-detail',['plant_number' => $plant['id']])}}">
+                        <a href="{{route('user.plant-detail',['plant_number' => $plant['id']])}}">
                             <img src="/image/plant.jpg" alt="" class="h-100 w-100 border-16 filter-dark">
                             <div class="position-absolute top-0 w-100 h-100 align-items-center justify-content-center d-flex">
                                 <div class="text-center">

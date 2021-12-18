@@ -26,6 +26,15 @@ class MachineProblemRepository
     public function getMachineProblemInfo($id){
         return $this->machineProblem->find($id)->Machine;
     }
+
+    public function storeMachineProblem($data){
+        return $this->machineProblem->create($data);
+    }
+
+    public function updateMachineProblem($id, $data){
+        return $this->machineProblem->find($id)->update($data);
+    }
+    
     
 
 }

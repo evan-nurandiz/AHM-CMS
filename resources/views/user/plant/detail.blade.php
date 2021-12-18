@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.user')
 
 @section('style')
     <style>
@@ -28,7 +28,9 @@
                         </div>
                     </div>
                     <div class="col-12 plant mb-5 position-relative">
-                        <a href="{{route('admin.plant-machine-list',['plant_number' => 1])}}">
+                        <a href="{{route('user.plant-machine-list',[
+                        'plant_number' => 1
+                        ])}}">
                             <img src="/image/noise.jpg" alt="" class="h-100 w-100 border-16 filter-dark">
                             <div class="position-absolute top-0 w-100 h-100 align-items-center justify-content-center d-flex">
                                 <div class="text-center">
