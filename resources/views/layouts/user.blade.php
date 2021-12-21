@@ -49,7 +49,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand d-flex justify-content-center" href="dashboard.html">
+                    <a class="navbar-brand d-flex justify-content-center" href="{{route('user.dashboard')}}">
                         <!-- Logo icon -->
                         <b class="logo-icon w-75">
                             <!-- Dark Logo icon -->
@@ -98,10 +98,10 @@
                     <ul id="sidebarnav">
                         <!-- User Profile-->
                         <li class="sidebar-item pt-2">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="/user/machine-list"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('user.dashboard')}}"
                                 aria-expanded="false">
                                 <i class="far fa-clock" aria-hidden="true"></i>
-                                <span class="hide-menu">List Mesin</span>
+                                <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
                         <li class="sidebar-item pt-2">

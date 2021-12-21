@@ -44,7 +44,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand d-flex justify-content-center" href="dashboard.html">
+                    <a class="navbar-brand d-flex justify-content-center" href="/admin/dashboard">
                         <!-- Logo icon -->
                         <b class="logo-icon w-75">
                             <!-- Dark Logo icon -->
@@ -70,7 +70,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li>
-                            <a class="profile-pic" href="#">
+                            <a class="profile-pic" href="/admin/dashboard">
                                 <img src="/image/logo.png" alt="user-img" width="120"
                                     class="">
                             </a>

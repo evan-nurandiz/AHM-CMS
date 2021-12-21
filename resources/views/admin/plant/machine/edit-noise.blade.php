@@ -32,8 +32,12 @@
             ])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 @method('patch')
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Kode Mesin <span id="required">*</span></label>
+                    <input type="text" class="form-control" required name="code" value="{{$data['machineProblem']['code']}}">
+                </div>
                 <div class="form-group mb-4">
-                    <p>Symton Noise <span id="required">*</span></p>
+                    <p>Symptoms Noise<span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
                         <option>Open this select menu</option>
                         @foreach($data['symton_noises'] as $symton_noise)

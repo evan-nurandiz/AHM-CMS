@@ -81,10 +81,16 @@ class MachineController extends Controller
     {
         $machine = $this->machineRepository->getMachineById($machine_id);
         $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($machine_id);
+        $symton_noises = ExtractJsonHelpers::getSymtonNoise();
+        $cause_parts = ExtractJsonHelpers::getCausingPart();
+        $methods = ExtractJsonHelpers::getMethodList();
 
         $data = [
             'machine' => $machine,
             'machineProblems' => $machineProblems,
+            'symptons_noises' => $symton_noises,
+            'cause_parts' => $cause_parts,
+            'method' => $methods,
             'plant_id' => $plant_id
         ];
 
@@ -159,5 +165,34 @@ class MachineController extends Controller
                 'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
             ]);
         }
+    }
+
+    public function filter(Request $request,$plant_number,$machine_id){
+        $queryParams = '';
+        if($request['code'] != null){
+            $queryParams .= '&like=code,' . $request['code'];
+        }
+
+        if($request['symton_noise'] != null){ 
+            $queryParams .= '&like=symton_noise,' . $request['symton_noise'];
+        }
+
+        if($request['causing_part'] != null){
+            $queryParams .= '&like=causing_part,' . $request['causing_part'];
+        }
+
+        if($request['method'] != null){
+            $queryParams .= '&like=method,' . $request['method'];
+        }
+
+        if($request['date'] != null){
+            $queryParams .= '&sort=created_at,' . $request['date'];
+        }
+
+        $previousUrl = strtok(url()->previous(), '?');
+
+        return redirect()->to(
+            $previousUrl . '?' . $queryParams
+        );
     }
 }

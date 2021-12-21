@@ -1,22 +1,27 @@
 [
     {
         "id": 1,
+        "image": "plant_1.jpg",
         "name": "Plant 1"
     },
     {
         "id": 2,
+        "image": "plant_2.jpg",
         "name": "Plant 2"
     },
     {
         "id": 3,
+        "image": "plant_3.jpg",
         "name": "Plant 3"
     },
     {
         "id": 4,
+        "image": "plant_4.jpg",
         "name": "Plant 4"
     },
     {
         "id": 5,
+        "image": "plant_4.jpg",
         "name": "Plant 5"
     }
 ]

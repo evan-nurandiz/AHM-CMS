@@ -25,7 +25,7 @@
                 </div>
                 <div class="row mt-5">
                     <div class="col-12 col-lg-4 px-0 px-lg-2 rounded border-doted mb-4 mb-lg-0 p-4 d-flex align-items-center justify-content-center" id="input-image-preview"
-                    style="background-image:{{ asset('storage/machine_image/'.$data['machine']['image']) }} ;">
+                    style="background-image: url({{ asset('storage/machine_image/'.$data['machine']['image']) }}); background-size:cover">
                         <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file">Upload Foto Mesin</label>
                         <input type="file" id="file" class="d-none" name="image_temp">
                     </div>
@@ -52,8 +52,6 @@
 
 @section('bottom')
     <script>
-        var machine = {!! json_encode($data['machine']) !!};
-
         //Uplaod Preview
         const imagePreviewCanvas = document.querySelector('#input-image-preview')
         const imageInput = document.querySelector('#file')

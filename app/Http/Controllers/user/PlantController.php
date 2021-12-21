@@ -27,7 +27,11 @@ class PlantController extends Controller
     }
 
     public function detail($plant_number){
-        return view('user.plant.detail');
+        return view('user.plant.detail',compact('plant_number'));
+    }
+
+    public function detailEngine($plant_number){
+        return view('user.plant.detail-engine',compact('plant_number'));
     }
 
     public function machineList($plant_number){
@@ -38,10 +42,16 @@ class PlantController extends Controller
     public function machineDetail($plant_number, $machine_id){
         $machine = $this->machineRepository->getMachineById($machine_id);
         $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($machine_id);
+        $symton_noises = ExtractJsonHelpers::getSymtonNoise();
+        $cause_parts = ExtractJsonHelpers::getCausingPart();
+        $methods = ExtractJsonHelpers::getMethodList();
 
         $data = [
             'machine' => $machine,
             'machineProblems' => $machineProblems,
+            'symptons_noises' => $symton_noises,
+            'cause_parts' => $cause_parts,
+            'method' => $methods,
             'plant_id' => $plant_number
         ];
 
@@ -61,6 +71,35 @@ class PlantController extends Controller
         ];
 
         return view('user.plant.machine.noise-detail',compact('data'));
+    }
+    
+    public function filterNoise(Request $request,$plant_number,$machine_id){
+        $queryParams = '';
+        if($request['code'] != null){
+            $queryParams .= '&like=code,' . $request['code'];
+        }
+
+        if($request['symton_noise'] != null){ 
+            $queryParams .= '&like=symton_noise,' . $request['symton_noise'];
+        }
+
+        if($request['causing_part'] != null){
+            $queryParams .= '&like=causing_part,' . $request['causing_part'];
+        }
+
+        if($request['method'] != null){
+            $queryParams .= '&like=method,' . $request['method'];
+        }
+
+        if($request['date'] != null){
+            $queryParams .= '&sort=created_at,' . $request['date'];
+        }
+
+        $previousUrl = strtok(url()->previous(), '?');
+
+        return redirect()->to(
+            $previousUrl . '?' . $queryParams
+        );
     }
 
 }

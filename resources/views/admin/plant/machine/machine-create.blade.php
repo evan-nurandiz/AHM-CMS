@@ -21,7 +21,7 @@
                 </div>
                 <div class="row gap-lg-5 justify-content-lg-center mt-5">
                     <div class="col-12 mb-3 mb-lg-0 col-md-12 col-lg-4 rounded border-doted p-4 d-flex align-items-center justify-content-center" id="input-image-preview">
-                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file">Upload Foto Mesin</label>
+                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file">Upload Foto</label>
                         <input type="file" id="file" class="d-none" name="image_temp">
                     </div>
                     <div class="col-12 col-lg-7 px-0">

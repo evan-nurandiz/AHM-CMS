@@ -22,15 +22,8 @@ class IndexController extends Controller
     }
 
     public function index(){
-        $machines =  $this->machineRepository->countAllMachine();
-        $plant = count(ExtractJsonHelpers::getPlantList());
-
-        $data = [
-            'machines' => $machines,
-            'plant' => $plant,
-        ];
-
-        return view('user.dashboard',compact('data'));
+        $plants = ExtractJsonHelpers::getPlantList();
+        return view('user.dashboard',compact('plants'));
     }
 
 }

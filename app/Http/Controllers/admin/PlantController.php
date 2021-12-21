@@ -20,6 +20,10 @@ class PlantController extends Controller
     }
 
     public function detail($plant_number){
-        return view('admin.plant.detail');
+        return view('admin.plant.detail',compact('plant_number'));
+    }
+
+    public function engineDetail($plant_number){
+        return view('admin.plant.detail-engine',compact('plant_number'));
     }
 }

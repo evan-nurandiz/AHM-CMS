@@ -16,6 +16,7 @@ class CreateMachineProblemsTable extends Migration
         Schema::create('machine_problems', function (Blueprint $table) {
             $table->id();
             $table->integer('machine_id');
+            $table->string('code');
             $table->string('symton_noise');
             $table->string('causing_part');
             $table->string('breakdown_part')->nullable();

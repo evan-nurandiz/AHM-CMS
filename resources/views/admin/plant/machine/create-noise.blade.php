@@ -36,8 +36,12 @@
                 'plant_number' => $data['plant_id']
             ])}}" method="post" enctype="multipart/form-data">
                 @csrf
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Kode Mesin <span id="required">*</span></label>
+                    <input type="text" class="form-control" required name="code">
+                </div>
                 <div class="form-group mb-4">
-                    <p>Symton Noise <span id="required">*</span></p>
+                    <p>Symptoms Noise <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Open this select menu</option>
                         @foreach($data['symton_noises'] as $symton_noise)
@@ -49,7 +53,7 @@
                 <div class="form-group mb-4" >
                     <p>Part Penyebab <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                        <option selected>Pilih Cause Part</option>
                         @foreach($data['cause_parts'] as $cause_part)
                         <option value="{{$cause_part['causing_part']}}" id="causing-part-input">{{$cause_part['causing_part']}}</option>
                         @endforeach
@@ -59,7 +63,7 @@
                 <div class="form-group mb-4 d-none" id="breakdownpart">
                     <p>Breakdown Part</p>
                     <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                        <option selected>Pilih Breakdown Part</option>
                         @foreach($data['breakdown_parts'] as $breakdown_part)
                         <option value="{{$breakdown_part['part']}}" id="breakdown-part-input">{{$breakdown_part['part']}}</option>
                         @endforeach
@@ -68,18 +72,18 @@
                 </div>
                 <div class="form-group mb-4" >
                     <p>Method <span id="required">*</span></p>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                    <select class="form-select" aria-label="Default select example" name="method" required>
+                        <option selected>Pilih Metode</option>
                         @foreach($data['methods'] as $method)
                             <option value="{{$method['method']}}" id="method-input">{{$method['method']}}</option>
                         @endforeach
-                        <input type="hidden" name="method" required id="method">
+                        <input type="hidden" id="method">
                     </select>
                 </div>
                 <div class="form-group mb-4 d-none" id="at-gear-wrap">
                     <p>At Gear</p>
                     <select class="form-select" aria-label="Default select example">
-                        <option selected>Open this select menu</option>
+                        <option selected>Pilih at gear</option>
                         @foreach($data['at_gears'] as $at_gear)
                             <option value="{{$at_gear['gear']}}" id="at-gear-input">{{$at_gear['gear']}}</option>
                         @endforeach

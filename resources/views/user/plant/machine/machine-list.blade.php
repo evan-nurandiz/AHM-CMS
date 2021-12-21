@@ -11,9 +11,17 @@
             -webkit-box-orient: vertical;
         }
 
-        #dashboard .machine-wrapper{
-            height:126px;
-            max-height:126px;
+        #dashboard .card{
+            background: rgba(255, 255, 255, 0.4);
+            border: 0.5px solid #A9A9A9;
+            box-sizing: border-box;
+            border-radius: 12px;
+        }
+
+        #dashboard .card img{
+            border-top-left-radius:12px !important;
+            border-top-right-radius:12px !important;
+            max-height:260px;
         }
     </style>
 @endsection
@@ -21,23 +29,24 @@
 @section('content')
 	<main id="dashboard">
         <div class="row">
-            <div class="col-12 col-lg-12 py-4 bg-white">
+            <div class="col-12 col-lg-12 py-4 bg-white min-100vh">
                 <div class="d-flex justify-content-between">
                     <h3>List Mesin</h4>
                 </div>
                 <div class="row gap-2 w-100 mx-0">
                     @foreach($machines as $machine)
-                    <div class="col-12 col-lg-3 mt-4 mt-lg-0 machine-wrapper h-lg-100">
+                    <div class="col-12 col-lg-3 mt-4 mt-lg-5 machine-wrapper h-lg-100 px-0">
                         <a href="{{route('user.plant-machine-detail',
                         ['plant_number' => $plant_number,'machine_id' => $machine['id'] ]
                         )}}">
-                            <div class="row align-items-center border rounded-md p-2 shadow h-100">
-                                <div class="col-4">
-                                    <img src="{{$machine['image'] ? asset('storage/machine_image/'.$machine['image']) : '/image/icon/engine-icon.png'}}" alt="" class="w-100">
-                                </div>
-                                <div class="col-8">
-                                    <h4>{{$machine['type']}}</h4>
-                                    <p class="description text-secondary">{{$machine['description']}}
+                            <div class="card shadow-md w-100">
+                                <img class="card-img-top w-100" 
+                                src="{{$machine['image'] ? asset('storage/machine_image/'.$machine['image']) : '/image/icon/engine-icon.png'}}" alt="Card image cap">
+                                <div class="card-body">
+                                    <h5 class="card-title font-bold">{{$machine['type']}}</h5>
+                                    <p class="card-text font-light description text-secondary">{{$machine['description']}}</p>
+                                    <p class="mt-2 text-secondary">
+                                        {{ date('d F Y', strtotime($machine['created_at']))}}</
                                     </p>
                                 </div>
                             </div>

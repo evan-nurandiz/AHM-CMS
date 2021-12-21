@@ -47,11 +47,13 @@ Route::group(['prefix' => 'admin','middleware'=>['role:Admin']],function () {
     Route::prefix('/dashboard/list-plan')->group(function () {
         Route::get('/',[PlantController::class,'index'])->name('admin.plant');
         Route::get('/{plant_number}/detail',[PlantController::class,'detail'])->name('admin.plant-detail');
+        Route::get('/{plant_number}/engine',[PlantController::class,'engineDetail'])->name('admin.plant-engine');
         Route::prefix('/{plant_number}/list-mesin')->group(function () {
             Route::get('/',[MachineController::class,'index'])->name('admin.plant-machine-list');
             Route::get('/tambah-mesin',[MachineController::class,'create'])->name('admin.plant-machine-add');
             Route::post('/tambah-mesin',[MachineController::class,'store'])->name('admin.plant-machine-add.post');
             Route::get('/{machine_id}/detail',[MachineController::class,'show'])->name('admin.plant-machine-detail');
+            Route::post('/{machine_id}/noise/filter',[MachineController::class,'filter'])->name('admin.plant-machine-filter-noise');
             Route::get('/{machine_id}/edit',[MachineController::class,'edit'])->name('admin.plant-machine-edit');
             Route::patch('/{machine_id}/edit',[MachineController::class,'update'])->name('admin.plant-machine-update');
             Route::delete('/{machine_id}',[MachineController::class,'destroy'])->name('admin.plant-machine-delete');
@@ -73,12 +75,13 @@ Route::group(['prefix' => 'admin','middleware'=>['role:Admin']],function () {
 
 Route::group(['prefix' => 'user','middleware' => ['role:User']], function () {
     Route::get('/dashboard',[IndexController::class,'index'])->name('user.dashboard');
-    Route::prefix('/dashboard/list-plan')->group(function () {
-        Route::get('/',[UserPlantController::class,'index'])->name('user.plant');
-        Route::get('/{plant_number}/detail',[UserPlantController::class,'detail'])->name('user.plant-detail');
-        Route::prefix('/{plant_number}/list-mesin')->group(function () {
+    Route::prefix('/dashboard/plant')->group(function () {
+        Route::get('/{plant_number}',[UserPlantController::class,'detail'])->name('user.plant-detail');
+        Route::get('/{plant_number}/detail',[UserPlantController::class,'detailEngine'])->name('user.plant-detail-engine');
+        Route::prefix('/{plant_number}/engine/noise')->group(function () {
             Route::get('/',[UserPlantController::class,'machineList'])->name('user.plant-machine-list');
             Route::get('/{machine_id}/detail',[UserPlantController::class,'machineDetail'])->name('user.plant-machine-detail');
+            Route::post('/{machine_id}/detail/filter',[UserPlantController::class,'filterNoise'])->name('user.plant-machine-filter');
             Route::get('/{machine_id}/detail/{noise_id}',[UserPlantController::class,'machineNoise'])->name('user.plant-machine-noise');
         });
     });

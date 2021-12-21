@@ -7,6 +7,10 @@
     color:#BFBFBF;
 }
 
+.pl-0{
+    padding-left: 0px !important;
+}
+
 .border-16{
     border-radius: 16px;
 }
@@ -25,4 +29,20 @@
 
 #required{
     color: red;
+}
+
+.min-100vh{
+    min-height: 100vh !important;
+}
+
+.font-bold{
+    font-weight: 900 !important;
+}
+
+.font-normal{
+    font-weight: 600 !important;
+}
+
+.font-light{
+    font-weight: 100 !important;
 }

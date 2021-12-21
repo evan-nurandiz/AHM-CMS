@@ -16,7 +16,7 @@ class MachineProblemRepository
     }
 
     public function getMachineProblemByMachineId($machine_id){
-        return $this->machineProblem->where('machine_id',$machine_id)->paginate(env('PER_PAGE'));
+        return $this->machineProblem->where('machine_id',$machine_id)->filter()->paginate(env('PER_PAGE'));
     }
 
     public function getMachineProblemById($id){

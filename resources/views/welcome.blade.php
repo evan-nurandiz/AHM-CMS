@@ -22,15 +22,22 @@
             }
 
             .side-login{
-                height:100vh;
+                height:100vh ;
+            }
+            
+            @media only screen and (max-width: 700px) {
+                .side-login{
+                    height:50vh;
+                }
             }
         </style>
     </head>
     <body class="antialiased">
         <div class="row justify-content-center align-items-center">
-            <div class="col-12 col-md-4 col-lg-5 d-none d-md-block d-lg-block bg-base side-login">
+            <div class="col-12 col-md-12 col-lg-5 d-block d-md-block d-lg-block side-login px-0">
+                <img src="/image/login.jpg" alt="" class="h-100 w-100">
             </div>
-            <div class="col-12 col-md-8 col-lg-7 py-5 py-lg-0">
+            <div class="col-12 col-md-12 col-lg-7 py-5 py-lg-0">
                 <div class="row justify-content-center">
                     <div class="col-12 col-lg-10 p-5">
                         <div class="row justify-content-center">

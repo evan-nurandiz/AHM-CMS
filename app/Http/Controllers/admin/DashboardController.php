@@ -22,16 +22,7 @@ class DashboardController extends Controller
 
 
     public function index(){
-        $machines =  $this->machineRepository->countAllMachine();
-        $plant = count(json_decode(file_get_contents(public_path('data/plant_list.json')), true));
-        $user = $this->userRepository->countAllUsers();
-
-        $data = [
-            'machines' => $machines,
-            'plant' => $plant,
-            'user' => $user
-        ];
-        
-        return view('admin.dashboard',compact('data'));
+        $plants = ExtractJsonHelpers::getPlantList();
+        return view('admin.plant.index',compact('plants'));
     }
 }
