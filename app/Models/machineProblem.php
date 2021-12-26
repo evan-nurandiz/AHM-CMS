@@ -11,11 +11,12 @@ class machineProblem extends Model
     use HasFactory, FilterQueryString;
 
     protected $table = "machine_problems";
-    protected $fillable = ['machine_id','code','symton_noise','causing_part','breakdown_part','method','at_gear','diagram_image','sound'];
+    protected $fillable = ['machine_id','code','symton_noise','causing_part','area','method','at_gear','diagram_image','sound'];
 
     protected $filters = [
         'sort',
-        'like'
+        'like',
+        'in'
     ];
     
 

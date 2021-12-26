@@ -11,17 +11,15 @@
 @section('content')
 	<main id="dashboard">
         <div class="col-12 bg-white p-4">
-            <h2>Edit Machine Problem</h2>
+            <h2>Edit Engine Problem</h2>
             <div class="row justify-content-center my-4">
                 <div class="col-6 col-lg-2">
                     <img src="/image/icon/engine-icon.png" alt="" class="w-100" id="image">
                 </div>
                 <div class="col-12 col-lg-10">
-                    <h3>K45 Engine</h3>
+                    <h3>{{$data['machine']['type']}}</h3>
                     <p class="description">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil hic cumque consequatur fugiat. Delectus enim a 
-                        perspiciatis excepturi ea asperiores iure voluptas cupiditate nemo et nesciunt, consequuntur sit 
-                        laboriosam blanditiis eos velit ullam quis optio illum vel. At reiciendis ullam dolor error corporis, voluptas corrupti?
+                        {{$data['machine']['description']}}
                     </p>
                 </div>
             </div>
@@ -33,7 +31,7 @@
                 @csrf
                 @method('patch')
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Kode Mesin <span id="required">*</span></label>
+                    <label for="exampleFormControlInput1">No Engine <span id="required">*</span></label>
                     <input type="text" class="form-control" required name="code" value="{{$data['machineProblem']['code']}}">
                 </div>
                 <div class="form-group mb-4">
@@ -48,29 +46,34 @@
                     </select>
                 </div>
                 <div class="form-group mb-4" >
-                    <p>Part Penyebab <span id="required">*</span></p>
-                    <select class="form-select" aria-label="Default select example">
-                        <option>Open this select menu</option>
-                        @foreach($data['cause_parts'] as $cause_part)
-                        <option value="{{$cause_part['causing_part']}}" id="causing-part-input"
-                        {{ $data['machineProblem']['causing_part'] == $cause_part['causing_part'] ? "selected" : "" }} >{{$cause_part['causing_part']}}</option>
-                        @endforeach
-                        <input type="hidden" name="causing_part" required id="causing-part" value="{{$data['machineProblem']['causing_part']}}">
-                    </select>
-                </div>
-                @if($data['machineProblem']['causing_part'] == 'Honing CYL Head')
-                <div class="form-group mb-4 {{$data['machineProblem']['causing_part'] == 'Honing CYL Head' ? 'd-block' : 'd-none' }}" id="breakdownpart">
-                    <p>Breakdown Part</p>
-                    <select class="form-select" aria-label="Default select example">
-                        <option >Open this select menu</option>
-                        @foreach($data['breakdown_parts'] as $breakdown_part)
-                        <option value="{{$breakdown_part['part']}}" id="breakdown-part-input"
-                        {{ $data['machineProblem']['breakdown_part'] == $breakdown_part['part'] ? "selected" : "" }} >{{$breakdown_part['part']}}</option>
+                    <p>Area<span id="required">*</span></p>
+                    <select class="form-select" aria-label="Default select example" name="area" required value="{{$data['machineProblem']['area']}}">
+                        <option>Pilih Area</option>
+                        @foreach($data['area'] as $area)
+                        <option value="{{$area['area']}}" id="causing-part-input"
+                        {{ $data['machineProblem']['area'] == $area['area'] ? "selected" : "" }} >{{$area['area']}}</option>
                         @endforeach
                     </select>
-                    <input type="hidden" name="breakdown_part" id="breakdown-part" value="{{$data['machineProblem']['breakdown_part']}}">
                 </div>
-                @endif
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Causing Part <span id="required">*</span></label>
+                    <input type="text" class="form-control" required name="causing_part" value="{{$data['machineProblem']['causing_part']}}">
+                </div>
+                <div class="form-group mb-4" >
+                    <p>Method <span id="required">*</span></p>
+                    <div class="row justify-content-between">
+                        @foreach($data['methods'] as $method)
+                            <div class="col-lg-3">
+                                @if(in_array($method['method'], json_decode($data['machineProblem']['method'])))
+                                    <input type="checkbox" id="{{$method['method']}}" name="method[]" value="{{$method['method']}}" checked>
+                                @else
+                                    <input type="checkbox" id="{{$method['method']}}" name="method[]" value="{{$method['method']}}" >
+                                @endif
+                                <label for="{{$method['method']}}">{{$method['method']}}</label><br>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
                 <div class="form-group mb-4" >
                     <p>Method <span id="required">*</span></p>
                     <select class="form-select" aria-label="Default select example">

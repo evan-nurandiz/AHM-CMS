@@ -44,52 +44,92 @@
                     </p>
                 </div>
             </div>
-            <form action="{{route('admin.plant-machine-filter-noise',[
-                'plant_number' => $data['plant_id'],
-                'machine_id' => $data['machine']['id']
-            ])}}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="row justify-content-start mx-0">
-                    <div class="col-12 mb-2 mb-lg-0 col-lg-2 pl-0">
-                        <input type="text" class="form-control" placeholder="Kode Mesin" name="code">
-                    </div>
-                    <div class="col-6 mb-2 mb-lg-0 col-lg-2 pl-0 pl-lg-2">
-                        <select class="form-select" aria-label="Default select example"  name="symton_noise"  id="symton_noise">
-                            <option selected value="">Open this select menu</option>
-                            @foreach($data['symptons_noises'] as $symton_noise)
-                                <option value="{{$symton_noise['symton_name']}}" id="symton-noise-input" for="symton_noise">{{$symton_noise['symton_name']}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-6 mb-2 mb-lg-0 col-lg-2">
-                        <select class="form-select" aria-label="Default select example" name="causing_part" id="causing-part">
-                            <option selected value="">Part Penyebab</option>
-                            @foreach($data['cause_parts'] as $cause_part)
-                            <option value="{{$cause_part['causing_part']}}" id="causing-part-input">{{$cause_part['causing_part']}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-6 mb-2 mb-lg-0 col-lg-2 pl-0 pl-lg-2">
-                        <select class="form-select" aria-label="Default select example"  name="method" id="method">
-                            <option selected value="">Metode</option>
-                            @foreach($data['method'] as $method)
-                                <option value="{{$method['method']}}" id="method-input">{{$method['method']}}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="col-6 mb-2 mb-lg-0 col-lg-2">
-                        <select class="form-select" aria-label="Default select example" name="date" id="date">
-                            <option selected value="">Tanggal</option>
-                            <option value="desc" id="symton-noise-input" for="date">Terbaru</option>
-                            <option value="asc" id="symton-noise-input" for="date">Terlama</option>
-                        </select>
-                    </div>
-                    <div class="col-12 col-lg-2 pl-0 pl-lg-2">
-                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+            <div class="accordion accordion-flush mb-2" id="accordionFlushExample">
+                <div class="accordion-item">
+                    <h2 class="accordion-header" id="flush-headingOne">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                        Filter Noise
+                    </button>
+                    </h2>
+                    <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
+                        <div class="accordion-body py-2 px-0 p-lg-2">
+                            <form action="{{route('admin.plant-machine-filter-noise',[
+                            'plant_number' => $data['plant_id'],
+                            'machine_id' => $data['machine']['id']
+                            ])}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                <div class="row justify-content-start mx-0">
+                                    <div class="col-12 mb-2 mb-lg-3 col-lg-6 pl-0">
+                                        <input type="text" class="form-control" placeholder="Kode Mesin" name="code">
+                                    </div>
+                                    <div class="col-12 mb-2 mb-lg-3 col-lg-6 pl-0">
+                                        <input type="text" class="form-control" placeholder="Causing Part" name="causing_part">
+                                    </div>
+                                    <div class="col-12 mb-3 px-lg-0">
+                                        <p>Symptoms Noise</p>
+                                        <div class="row mx-0">
+                                            @foreach($data['symptons_noises'] as $symton_noise)
+                                            <div class="col-6 col-lg pl-0">
+                                                <input class="form-check-input" type="checkbox" id="{{$symton_noise['symton_name']}}" value="{{$symton_noise['symton_name']}}" name="symton_noise[]">
+                                                <label class="form-check-label" for="{{$symton_noise['symton_name']}}">
+                                                    {{$symton_noise['symton_name']}}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-6 mb-3 pl-lg-0">
+                                        <p>Method</p>
+                                        <div class="row mx-0">
+                                            @foreach($data['method'] as $method)
+                                            <div class="col-6 col-lg pl-0">
+                                                <input class="form-check-input" type="checkbox" value="{{$method['method']}}" id="{{$method['method']}}" name="method[]">
+                                                <label class="form-check-label" for="{{$method['method']}}">
+                                                    {{$method['method']}}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-3 px-lg-0">
+                                        <p>Area</p>
+                                        <div class="row mx-0">
+                                            @foreach($data['area'] as $area)
+                                            <div class="col-12 col-lg pl-lg-0 px-0">
+                                                <input class="form-check-input" type="checkbox" id="{{$area['area']}}" value="{{$area['area']}}" name="area[]">
+                                                <label class="form-check-label" for="{{$area['area']}}">
+                                                    {{$area['area']}}
+                                                </label>
+                                            </div>
+                                            @endforeach
+                                        </div>
+                                    </div>
+                                    <div class="col-12 mb-4 px-lg-0">
+                                        <p>Tanggal</p>
+                                        <div class="row mx-0">
+                                            <div class="col pl-0">
+                                                <input class="form-check-input" type="radio" value="desc" name="date" id="asc">
+                                                <label class="form-check-label" for="asc">
+                                                    Terbaru
+                                                </label>
+                                            </div>
+                                            <div class="col pl-0">
+                                                <input class="form-check-input" type="radio" value="asc" name="date" id="desc">
+                                                <label class="form-check-label" for="desc">
+                                                    Terlama
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-lg-3 pl-0 px-0 pl-lg-2">
+                                        <button type="submit" class="btn btn-primary w-100">Filter</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
-            </form>
-            
+            </div>
             <div class="row justify-content-center">
             <div class="col-sm-12 mt-lg-4">
                 <div class="table-responsive">
@@ -100,6 +140,7 @@
                                 <th class="border-top-0">Kode Mesin</th>
                                 <th class="border-top-0">Symptoms Noise</th>
                                 <th class="border-top-0">Part Penyebab</th>
+                                <th class="border-top-0">Area</th>
                                 <th class="border-top-0">Method</th>
                                 <th class="border-top-0">Tanggal Input</th>
                                 <th class="border-top-0">Action</th>
@@ -112,6 +153,7 @@
                                     <td>{{$machineProblem['code']}}</td>
                                     <td>{{$machineProblem['symton_noise']}}</td>
                                     <td>{{$machineProblem['causing_part']}}</td>
+                                    <td>{{$machineProblem['area']}}</td>
                                     <td>{{$machineProblem['method']}}</td>
                                     <td>{{ date('d F Y', strtotime($machineProblem['created_at']))}}</td>
                                     <td>

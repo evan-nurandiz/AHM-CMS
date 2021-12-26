@@ -17,17 +17,15 @@
 @section('content')
 	<main id="dashboard">
         <div class="col-12 bg-white p-4">
-            <h2>Add Machine Problem</h2>
+            <h2>engine problem</h2>
             <div class="row justify-content-center my-4">
                 <div class="col-6 col-lg-2 mb-4 mb-lg-0">
                     <img src="/image/icon/engine-icon.png" alt="" class="w-100" id="image">
                 </div>
                 <div class="col-12 col-lg-10">
-                    <h3>K45 Engine</h3>
+                    <h3>{{$data['machine']['type']}}</h3>
                     <p class="description">
-                        Lorem ipsum dolor sit amet consectetur, adipisicing elit. Nihil hic cumque consequatur fugiat. Delectus enim a 
-                        perspiciatis excepturi ea asperiores iure voluptas cupiditate nemo et nesciunt, consequuntur sit 
-                        laboriosam blanditiis eos velit ullam quis optio illum vel. At reiciendis ullam dolor error corporis, voluptas corrupti?
+                        {{$data['machine']['description']}}
                     </p>
                 </div>
             </div>
@@ -37,7 +35,7 @@
             ])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="form-group">
-                    <label for="exampleFormControlInput1">Kode Mesin <span id="required">*</span></label>
+                    <label for="exampleFormControlInput1">No Engine <span id="required">*</span></label>
                     <input type="text" class="form-control" required name="code">
                 </div>
                 <div class="form-group mb-4">
@@ -51,36 +49,30 @@
                     </select>
                 </div>
                 <div class="form-group mb-4" >
-                    <p>Part Penyebab <span id="required">*</span></p>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Pilih Cause Part</option>
-                        @foreach($data['cause_parts'] as $cause_part)
-                        <option value="{{$cause_part['causing_part']}}" id="causing-part-input">{{$cause_part['causing_part']}}</option>
+                    <p>Area <span id="required">*</span></p>
+                    <select class="form-select" aria-label="Default select example" name="area">
+                        <option selected>Pilih Area</option>
+                        @foreach($data['area'] as $area)
+                        <option value="{{$area['area']}}" id="causing-part-input">{{$area['area']}}</option>
                         @endforeach
-                        <input type="hidden" name="causing_part" required id="causing-part">
                     </select>
                 </div>
-                <div class="form-group mb-4 d-none" id="breakdownpart">
-                    <p>Breakdown Part</p>
-                    <select class="form-select" aria-label="Default select example">
-                        <option selected>Pilih Breakdown Part</option>
-                        @foreach($data['breakdown_parts'] as $breakdown_part)
-                        <option value="{{$breakdown_part['part']}}" id="breakdown-part-input">{{$breakdown_part['part']}}</option>
-                        @endforeach
-                    </select>
-                    <input type="hidden" name="breakdown_part" id="breakdown-part">
+                <div class="form-group">
+                    <label for="exampleFormControlInput1">Causing Part <span id="required">*</span></label>
+                    <input type="text" class="form-control" required name="causing_part">
                 </div>
                 <div class="form-group mb-4" >
                     <p>Method <span id="required">*</span></p>
-                    <select class="form-select" aria-label="Default select example" name="method" required>
-                        <option selected>Pilih Metode</option>
+                    <div class="row justify-content-between">
                         @foreach($data['methods'] as $method)
-                            <option value="{{$method['method']}}" id="method-input">{{$method['method']}}</option>
+                            <div class="col-lg-3">
+                                <input type="checkbox" id="{{$method['method']}}" name="method[]" value="{{$method['method']}}">
+                                <label for="{{$method['method']}}">{{$method['method']}}</label><br>
+                            </div>
                         @endforeach
-                        <input type="hidden" id="method">
-                    </select>
+                    </div>
                 </div>
-                <div class="form-group mb-4 d-none" id="at-gear-wrap">
+                <div class="form-group mb-4" id="at-gear-wrap">
                     <p>At Gear</p>
                     <select class="form-select" aria-label="Default select example">
                         <option selected>Pilih at gear</option>
@@ -92,13 +84,13 @@
                 </div>
                 <div class="upload-container justify-content-between row mx-0 mb-5">
                     <div class="col-12 mb-4 mb-lg-0 col-lg-5 rounded border-doted p-4 d-flex align-items-center justify-content-center" id="input-image-preview">
-                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto Mesin </label>
+                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto</label>
                         <input type="file" id="file" class="d-none" required name="image_temp">
                     </div>
                     <div class="col-12 col-lg-5 rounded border-doted p-4 " id="sound-priview">
                         <audio id="sound" controls class="d-none"></audio>
                         <div class="d-flex align-items-center justify-content-center h-100" >
-                            <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="sound-input" >Upload Suara Mesin</label>
+                            <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="sound-input" >Suara</label>
                             <input type="file" id="sound-input" class="d-none" required name="sound_temp">
                         </div>
                     </div>
@@ -118,34 +110,6 @@
         symtonNoiseOptions.forEach((symtonNoiseOption,i) => {
             symtonNoiseOption.addEventListener('click',() => {
                 symtonNoiseInput.value = symtonNoiseOption.value
-            })
-        })
-
-        //Causing Parts
-        const causingPartInput = document.querySelector('#causing-part')
-        const causingPartOptions = document.querySelectorAll('#causing-part-input')
-        const BreakDownWrap = document.querySelector('#breakdownpart')
-        
-
-        causingPartOptions.forEach((causingPartOption,i) => {
-            causingPartOption.addEventListener('click',() => {
-                causingPartInput.value = causingPartOption.value
-                if(causingPartInput.value == 'Honing CYL Head'){
-                    BreakDownWrap.classList.remove("d-none")
-                }else{
-                    BreakDownWrap.classList.add("d-none")
-                    breakDownPartInput.value = ''
-                }
-            })
-        })
-
-        //Breakdown Part
-        const breakDownPartInput = document.querySelector('#breakdown-part')
-        const breakDownPartOptions = document.querySelectorAll('#breakdown-part-input')
-
-        breakDownPartOptions.forEach((breakDownPartOption, i) => {
-            breakDownPartOption.addEventListener('click',() => {
-                breakDownPartInput.value = breakDownPartOption.value
             })
         })
 

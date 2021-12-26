@@ -43,18 +43,15 @@
         <!-- ============================================================== -->
         <!-- Topbar header - style you can find in pages.scss -->
         <!-- ============================================================== -->
-        <header class="topbar bg-gray" data-navbarbg="skin5">
+        <header class="topbar bg-white" data-navbarbg="skin5">
             <nav class="navbar top-navbar navbar-expand-md navbar-dark">
                 <div class="navbar-header py-2" data-logobg="skin6">
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand d-flex justify-content-center" href="{{route('user.dashboard')}}">
+                    <a class="navbar-brand w-xs-50" href="{{route('user.dashboard')}}">
                         <!-- Logo icon -->
-                        <b class="logo-icon w-75">
-                            <!-- Dark Logo icon -->
-                            <img src="/image/logo-astra-internasional.jpg" alt="homepage" class="w-100"/>
-                        </b>
+                        <img src="/image/logo-astra-internasional.jpg" alt="homepage" class="w-75 w-lg-100"/>
                     </a>
                     <!-- ============================================================== -->
                     <!-- End Logo -->
@@ -62,20 +59,19 @@
                     <!-- ============================================================== -->
                     <!-- toggle and nav items -->
                     <!-- ============================================================== -->
-                    <a class="nav-toggler waves-effect waves-light text-dark d-block d-md-none"
-                        href="javascript:void(0)"><i class="ti-menu ti-close"></i></a>
+                    <img src="/image/logo.png" alt="" class="w-50 px-4 d-md-none d-lg-none">
                 </div>
                 <!-- ============================================================== -->
                 <!-- End Logo -->
                 <!-- ============================================================== -->
-                <div class="navbar-collapse collapse bg-gray" id="navbarSupportedContent" data-navbarbg="skin5">
+                <div class="navbar-collapse collapse bg-white" id="navbarSupportedContent" data-navbarbg="skin5">
                    
                     <!-- ============================================================== -->
                     <!-- Right side toggle and nav items -->
                     <!-- ============================================================== -->
                     <ul class="navbar-nav ms-auto d-flex align-items-center">
                         <li>
-                            <a class="profile-pic" href="#">
+                            <a class="profile-pic" href="/admin/dashboard">
                                 <img src="/image/logo.png" alt="user-img" width="120"
                                     class="">
                             </a>
@@ -105,7 +101,7 @@
                             </a>
                         </li>
                         <li class="sidebar-item pt-2">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.plant')}}"
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('user.dashboard')}}"
                                 aria-expanded="false">
                                 <i class="fas fa-building" aria-hidden="true"></i>
                                 <span class="hide-menu">List Plant</span>
@@ -136,8 +132,34 @@
         <!-- ============================================================== -->
         <div class="page-wrapper">
             <div class="container-fluid">
-        
                 @yield('content')
+                <div class="fixed-bottom d-block d-md-none d-lg-none" id="bottom-menu-mobile">
+                    <div class="row align-items-center justify-content-between pt-2 px-2 shadow-lg">
+                        <div class="col-6">
+                            <a href="{{route('user.dashboard')}}" class="text-decoration-none">
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
+                                        <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
+                                    </svg>
+                                    <p>Plant</p>
+                                </div>
+                            </a>
+                        </div>
+                        <div class="col-6">
+                            <a href="{{route('logout')}}" class="text-decoration-none" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();" >
+                                <div class="text-center">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z"/>
+                                        <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z"/>
+                                    </svg>
+                                    <p>Logout</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <!-- ============================================================== -->

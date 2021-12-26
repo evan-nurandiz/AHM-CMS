@@ -19,6 +19,10 @@ class MachineRepository
         return $this->machine->paginate(env('PER_PAGE'));
     }
 
+    public function getMachineByPlantId($plant_id){
+        return $this->machine->where('plant_id',$plant_id)->paginate(env('PER_PAGE'));
+    }
+
     public function countAllMachine(){
         return $this->machine->count();
     }

@@ -39,4 +39,9 @@ class ExtractJSONHelpers {
         $path = public_path('data/plant_list.json');
         return json_decode(file_get_contents($path), true);
     }
+
+    public static function getArea(){
+        $path = public_path('data/area.json');
+        return json_decode(file_get_contents($path), true);
+    }
 }

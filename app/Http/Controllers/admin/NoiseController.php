@@ -30,15 +30,15 @@ class NoiseController extends Controller
     public function create($plant_id,$machine_id)
     {
         $symton_noises = ExtractJsonHelpers::getSymtonNoise();
-        $cause_parts = ExtractJsonHelpers::getCausingPart();
-        $breakdown_parts = ExtractJsonHelpers::getBreakdownPart();
+        $area = ExtractJsonHelpers::getArea();
         $methods = ExtractJsonHelpers::getMethodList();
         $at_gears = ExtractJsonHelpers::getAtgearPart();
+        $machine = $this->machineRepository->getMachineById($machine_id);
 
         $data = [
+            'machine' => $machine,
             'symton_noises' => $symton_noises,
-            'cause_parts' => $cause_parts,
-            'breakdown_parts' => $breakdown_parts,
+            'area' => $area,
             'methods' => $methods,
             'at_gears' => $at_gears,
             'plant_id' => $plant_id,
@@ -52,6 +52,8 @@ class NoiseController extends Controller
             Helper::uploadContent('diagram_image', 'image_temp','machine_diagram/','machine_problems','diagram_image');
             Helper::uploadContent('sound', 'sound_temp','machine_sound/','machine_problems','sound');
             $request['machine_id'] = $machine_id;
+            $method = implode(',',  $request['method']);
+            $request['method'] = $method;
 
             DB::beginTransaction();
             session()->flash('response', $this->machineProblemRepository->storeMachineProblem($request->except(['sound_temp','image_temp'])));
@@ -84,20 +86,21 @@ class NoiseController extends Controller
     }
 
     public function edit($machine_id, $plant_id, $noise_id){
+        $machine = $this->machineProblemRepository->getMachineProblemInfo($noise_id);
         $machineProblem = $this->machineProblemRepository->getMachineProblemById($noise_id);
         $symton_noises = ExtractJsonHelpers::getSymtonNoise();
-        $cause_parts = ExtractJsonHelpers::getCausingPart();
-        $breakdown_parts = ExtractJsonHelpers::getBreakdownPart();
+        $area = ExtractJsonHelpers::getArea();
         $methods = ExtractJsonHelpers::getMethodList();
         $at_gears = ExtractJsonHelpers::getAtgearPart();
+        $machineProblem['method'] = json_encode(explode(",",$machineProblem['method']));
 
         $data = [
+            'machine' => $machine,
             'machine_id' => $machine_id,
             'plant_id' => $plant_id,
             'noise_id' => $noise_id,
             'symton_noises' => $symton_noises,
-            'cause_parts' => $cause_parts,
-            'breakdown_parts' => $breakdown_parts,
+            'area' => $area,
             'methods' => $methods,
             'at_gears' => $at_gears,
             'machineProblem' => $machineProblem
@@ -107,8 +110,12 @@ class NoiseController extends Controller
     }
     
     public function update(Request $request,$machine_id, $plant_id, $noise_id){
+        return $request;
         try {
             $machineProblem = $this->machineProblemRepository->getMachineProblemById($noise_id);
+            $method = implode(', ',  $request['method']);
+            $request['method'] = $method;
+
             if($request->hasFile('image_temp')){
                 Storage::delete('/public/machine_diagram/' . $machineProblem['diagram_image']);
                 Helper::uploadContent('diagram_image', 'image_temp','machine_diagram/','machine_problems','diagram_image');   

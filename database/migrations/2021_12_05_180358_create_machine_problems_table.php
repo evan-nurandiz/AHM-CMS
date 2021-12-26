@@ -19,7 +19,7 @@ class CreateMachineProblemsTable extends Migration
             $table->string('code');
             $table->string('symton_noise');
             $table->string('causing_part');
-            $table->string('breakdown_part')->nullable();
+            $table->string('area');
             $table->string('method');
             $table->string('at_gear')->nullable();
             $table->string('diagram_image');

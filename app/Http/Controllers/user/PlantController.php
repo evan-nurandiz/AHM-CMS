@@ -43,14 +43,14 @@ class PlantController extends Controller
         $machine = $this->machineRepository->getMachineById($machine_id);
         $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($machine_id);
         $symton_noises = ExtractJsonHelpers::getSymtonNoise();
-        $cause_parts = ExtractJsonHelpers::getCausingPart();
+        $area = ExtractJsonHelpers::getArea();
         $methods = ExtractJsonHelpers::getMethodList();
 
         $data = [
             'machine' => $machine,
             'machineProblems' => $machineProblems,
             'symptons_noises' => $symton_noises,
-            'cause_parts' => $cause_parts,
+            'area' => $area,
             'method' => $methods,
             'plant_id' => $plant_number
         ];
@@ -75,20 +75,26 @@ class PlantController extends Controller
     
     public function filterNoise(Request $request,$plant_number,$machine_id){
         $queryParams = '';
+
         if($request['code'] != null){
             $queryParams .= '&like=code,' . $request['code'];
         }
 
         if($request['symton_noise'] != null){ 
-            $queryParams .= '&like=symton_noise,' . $request['symton_noise'];
+            $queryParams .= '&like=symton_noise,' . implode(', ',  $request['symton_noise']);
         }
 
         if($request['causing_part'] != null){
             $queryParams .= '&like=causing_part,' . $request['causing_part'];
         }
 
+        if($request['area'] != null){
+            $queryParams .= '&like=area,' . implode(', ',  $request['area']);
+        }
+        
+
         if($request['method'] != null){
-            $queryParams .= '&like=method,' . $request['method'];
+            $queryParams .= '&like=method,' . implode(', ', $request['method']);
         }
 
         if($request['date'] != null){

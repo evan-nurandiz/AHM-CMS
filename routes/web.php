@@ -8,6 +8,7 @@ use App\Http\Controllers\user\IndexController;
 use App\Http\Controllers\admin\PlantController;
 use App\Http\Controllers\admin\NoiseController;
 use App\Http\Controllers\user\PlantController as UserPlantController;
+use App\Http\Controllers\HomeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,13 +21,7 @@ use App\Http\Controllers\user\PlantController as UserPlantController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/profile', function () {
-    return view('admin.dashboard');
-});
+Route::get('/',[HomeController::class,'welcome']);
 
 Auth::routes();
 

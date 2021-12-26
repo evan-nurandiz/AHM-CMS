@@ -44,19 +44,17 @@
                     </div>
                 </div>
                 <div class="mt-4">
+                    <p class="text-secondary mb-1">Causing Part</p>
+                    <h4>{{$data['machineProblem']['causing_part']}}</h4>
+                </div>
+                <div class="mt-4">
                     <p class="text-secondary mb-1">Symton Noise</p>
                     <h4>{{$data['machineProblem']['symton_noise']}}</h4>
                 </div>
                 <div class="mt-4">
-                    <p class="text-secondary mb-1">Causing Part</p>
-                    <h4>{{$data['machineProblem']['causing_part']}}</h4>
+                    <p class="text-secondary mb-1">Area</p>
+                    <h4>{{$data['machineProblem']['area']}}</h4>
                 </div>
-                @if($data['machineProblem']['causing_part'] == 'Honing CYL Head')
-                <div class="mt-4">
-                    <p class="text-secondary mb-1">Break Down Part</p>
-                    <h4>{{$data['machineProblem']['breakdown_part']}}</h4>
-                </div>
-                @endif
                 <div class="mt-4">
                     <p class="text-secondary mb-1">Method</p>
                     <h4>{{$data['machineProblem']['method']}}</h4>
