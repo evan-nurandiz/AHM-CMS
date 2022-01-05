@@ -101,12 +101,12 @@
                 <div class="justify-content-between align-items-center row mx-0 mb-5">
                     <div class="col-12 px-0 px-lg-2 text-center col-lg-5 rounded p-4 align-items-center justify-content-center" >
                         <img src="{{ asset('storage/machine_diagram/'.$data['machineProblem']['diagram_image']) }}" id="input-image-preview" alt="" class="w-100">
-                        <label type="button" class="my-4 btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto Mesin</label>
+                        <label type="button" class="my-4 btn bg-base text-white rounded w-50 h-25" for="file" accept="image/*">Upload Foto Engine</label>
                         <input type="file" id="file" class="d-none" name="image_temp"> 
                     </div>
                     <div class="col-12 col-lg-5 text-center mb-2 p-4 ">
                         <audio id="sound" controls src="{{ asset('storage/machine_sound/'.$data['machineProblem']['sound']) }}" ></audio>
-                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="sound-input" >Upload Suara Mesin</label>
+                        <label type="button" class="btn bg-base text-white rounded w-50 h-25" for="sound-input" >Upload Suara Engine</label>
                         <input type="file" id="sound-input" class="d-none"  name="sound_temp">
                     </div>
                 </div>

@@ -29,17 +29,17 @@
                         ])}}" method="post">
                             @csrf
                             @method('delete')
-                            <button type="submit" class="btn bg-base text-white" onclick="return confirm('Are you sure?')">Hapus Mesin</button>
+                            <button type="submit" class="btn bg-base text-white" onclick="return confirm('Are you sure?')">Hapus Engine</button>
                         </form>
                     </div>
                 </div>
                 <div class="row align-items-center mt-4">
                     <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                        <p>Grafik Mesin</p>
+                        <p>Grafik Engine</p>
                         <img src="{{ asset('storage/machine_diagram/'.$data['machineProblem']['diagram_image']) }}" alt="" class="w-100">
                     </div>
                     <div class="col-12 col-lg-6">
-                        <p>Suara Mesin</p>
+                        <p>Suara Engine</p>
                         <audio src="{{ asset('storage/machine_sound/'.$data['machineProblem']['sound']) }}" controls></audio>
                     </div>
                 </div>

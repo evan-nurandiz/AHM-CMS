@@ -16,8 +16,8 @@
             <form action="{{route('admin.plant-machine-add.post',['plant_number' => $plant_number])}}" method="post" enctype="multipart/form-data">
                 @csrf
                 <div class="d-flex align-items-center justify-content-between">
-                    <h3>Tambah Mesin</h3>
-                    <button type="submit" class="btn btn-success text-white">Tambah Mesin</button>
+                    <h3>Tambah Engine</h3>
+                    <button type="submit" class="btn btn-success text-white">Tambah Engine</button>
                 </div>
                 <div class="row gap-lg-5 justify-content-lg-center mt-5">
                     <div class="col-12 mb-3 mb-lg-0 col-md-12 col-lg-4 rounded border-doted p-4 d-flex align-items-center justify-content-center" id="input-image-preview">
@@ -31,10 +31,10 @@
                             <input type="hidden" class="form-control" name="plant_id" value="{{$plant_number}}" >
                         </div>  
                         <div class="form-group">
-                            <label for="exampleFormControlInput1">Tipe Mesin <span id="required">*</span></label>
+                            <label for="exampleFormControlInput1">Tipe Engine <span id="required">*</span></label>
                             <input type="text" class="form-control" required name="type">
                         </div>
-                        <label for="exampleFormControlTextarea1">Deskripisi Mesin <span id="required">*</span></label>
+                        <label for="exampleFormControlTextarea1">Deskripisi Engine <span id="required">*</span></label>
                         <textarea class="form-control" required id="exampleFormControlTextarea1" rows="3" name="description">
                         </textarea>
                     </div>

@@ -31,7 +31,7 @@
         <div class="row">
             <div class="col-12 col-lg-12 py-4 bg-white min-100vh">
                 <div class="d-flex justify-content-between">
-                    <h3>List Mesin</h4>
+                    <h3>List Engine</h4>
                 </div>
                 <div class="row gap-2 w-100 mx-0">
                     @foreach($machines as $machine)

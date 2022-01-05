@@ -14,11 +14,11 @@
             <div class="col-12 bg-white p-4">
                 <div class="row align-items-center mt-4">
                     <div class="col-12 col-lg-6 mb-3 mb-lg-0">
-                        <p>Grafik Mesin</p>
+                        <p>Grafik Engine</p>
                         <img src="{{ asset('storage/machine_diagram/'.$data['machineProblem']['diagram_image']) }}" alt="" class="w-100">
                     </div>
                     <div class="col-12 col-lg-6">
-                        <p>Suara Mesin</p>
+                        <p>Suara Engine</p>
                         <audio src="{{ asset('storage/machine_sound/'.$data['machineProblem']['sound']) }}" controls></audio>
                     </div>
                 </div>

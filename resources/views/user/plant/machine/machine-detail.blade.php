@@ -36,7 +36,7 @@
                                 @csrf
                                 <div class="row justify-content-start mx-0">
                                     <div class="col-12 mb-2 mb-lg-3 col-lg-6 pl-0">
-                                        <input type="text" class="form-control" placeholder="Kode Mesin" name="code">
+                                        <input type="text" class="form-control" placeholder="Kode Engine" name="code">
                                     </div>
                                     <div class="col-12 mb-2 mb-lg-3 col-lg-6 pl-0">
                                         <input type="text" class="form-control" placeholder="Causing Part" name="causing_part">
@@ -113,7 +113,7 @@
                         <thead>
                             <tr>
                                 <th class="border-top-0">No</th>
-                                <th class="border-top-0">Kode Mesin</th>
+                                <th class="border-top-0">Kode Engine</th>
                                 <th class="border-top-0">Symptoms Noise</th>
                                 <th class="border-top-0">Part Penyebab</th>
                                 <th class="border-top-0">Area</th>

@@ -43,10 +43,10 @@ Route::group(['prefix' => 'admin','middleware'=>['role:Admin']],function () {
         Route::get('/',[PlantController::class,'index'])->name('admin.plant');
         Route::get('/{plant_number}/detail',[PlantController::class,'detail'])->name('admin.plant-detail');
         Route::get('/{plant_number}/engine',[PlantController::class,'engineDetail'])->name('admin.plant-engine');
-        Route::prefix('/{plant_number}/list-mesin')->group(function () {
+        Route::prefix('/{plant_number}/list-Engine')->group(function () {
             Route::get('/',[MachineController::class,'index'])->name('admin.plant-machine-list');
-            Route::get('/tambah-mesin',[MachineController::class,'create'])->name('admin.plant-machine-add');
-            Route::post('/tambah-mesin',[MachineController::class,'store'])->name('admin.plant-machine-add.post');
+            Route::get('/tambah-Engine',[MachineController::class,'create'])->name('admin.plant-machine-add');
+            Route::post('/tambah-Engine',[MachineController::class,'store'])->name('admin.plant-machine-add.post');
             Route::get('/{machine_id}/detail',[MachineController::class,'show'])->name('admin.plant-machine-detail');
             Route::post('/{machine_id}/noise/filter',[MachineController::class,'filter'])->name('admin.plant-machine-filter-noise');
             Route::get('/{machine_id}/edit',[MachineController::class,'edit'])->name('admin.plant-machine-edit');

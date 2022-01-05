@@ -62,7 +62,7 @@ class MachineController extends Controller
             DB::beginTransaction();
             $create = $this->machineRepository->storeMachine($request->except('image_temp'));
             DB::commit();
-            return redirect()->route('admin.plant-machine-list',['plant_number' => $plant_number])->with('success','Berhasil Menambahkan Mesin');
+            return redirect()->route('admin.plant-machine-list',['plant_number' => $plant_number])->with('success','Berhasil Menambahkan Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -135,7 +135,7 @@ class MachineController extends Controller
             DB::beginTransaction();
             session()->flash('response', $this->machineRepository->updateMachine($machine_id, $request->all()));
             DB::commit();
-            return redirect()->back()->with('success','Berhasil Mengubah Mesin');
+            return redirect()->back()->with('success','Berhasil Mengubah Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -158,7 +158,7 @@ class MachineController extends Controller
             DB::commit();
             return redirect()->route('admin.plant-machine-list',[
                 'plant_number' => $plant_id
-            ])->with('success','Berhasil Menghapus Mesin');
+            ])->with('success','Berhasil Menghapus Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([

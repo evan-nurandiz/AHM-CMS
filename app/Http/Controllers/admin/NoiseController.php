@@ -61,7 +61,7 @@ class NoiseController extends Controller
             return redirect()->route('admin.plant-machine-detail',[
                 'plant_number' => $plant_id,
                 'machine_id' => $machine_id
-            ])->with('success','Berhasil Menyimpan Noise Mesin');
+            ])->with('success','Berhasil Menyimpan Noise Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -129,7 +129,7 @@ class NoiseController extends Controller
             DB::beginTransaction();
             session()->flash('response', $this->machineProblemRepository->updateMachineProblem($noise_id,$request->except(['sound_temp','image_temp','_method'])));
             DB::commit();
-            return redirect()->back()->with('success','Berhasil Mengubah Noise Mesin');
+            return redirect()->back()->with('success','Berhasil Mengubah Noise Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -146,7 +146,7 @@ class NoiseController extends Controller
         return redirect()->route('admin.plant-machine-detail',[
             'plant_number' => $plant_id,
             'machine_id' => $machine_id
-        ])->with('success','Berhasil Menghapus Noise Mesin');
+        ])->with('success','Berhasil Menghapus Noise Engine');
     }
 
 }
