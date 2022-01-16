@@ -15,6 +15,14 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $superAdmin = User::create([
+            'name' => 'Super Admin',
+            'email' => 'super@example.com',
+            'password' => Hash::make('super'),
+        ]);
+
+        $superAdmin->assignRole('Super Admin');
+
         $admin = User::create([
             'name' => 'Admin',
             'email' => 'admin@example.com',
@@ -22,6 +30,14 @@ class UserSeeder extends Seeder
         ]);
 
         $admin->assignRole('Admin');
+
+        $head = User::create([
+            'name' => 'Departemen Head',
+            'email' => 'deptHead@example.com',
+            'password' => Hash::make('head123'),
+        ]);
+
+        $head->assignRole('Division Head');
         
         $user = User::create([
             'name' => 'User',
@@ -30,5 +46,7 @@ class UserSeeder extends Seeder
         ]);
 
         $user->assignRole('User');
+
+        
     }
 }

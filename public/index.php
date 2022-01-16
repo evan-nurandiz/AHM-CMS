@@ -48,8 +48,16 @@ $app = require_once __DIR__.'/../bootstrap/app.php';
 
 $kernel = $app->make(Kernel::class);
 
+define('CONFIRM_STATUS',[
+    '0' => 'Menunggu Konfirmasi',
+    '1' => 'Diterima',
+    '2' => 'Revisi',
+]);
+
 $response = $kernel->handle(
     $request = Request::capture()
 )->send();
+
+
 
 $kernel->terminate($request, $response);

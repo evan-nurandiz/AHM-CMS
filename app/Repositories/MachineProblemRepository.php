@@ -15,26 +15,33 @@ class MachineProblemRepository
         $this->machineProblem = $machineProblem;
     }
 
-    public function getMachineProblemByMachineId($machine_id){
-        return $this->machineProblem->where('machine_id',$machine_id)->filter()->paginate(env('PER_PAGE'));
+    public function getMachineProblemByMachineId($machine_id)
+    {
+        return $this->machineProblem->where('machine_id', $machine_id)->where('confirmed', 1)->with('MachineDetail')->filter()->paginate(env('PER_PAGE'));
     }
 
-    public function getMachineProblemById($id){
+    public function getMachineProblemWithStatus($status)
+    {
+        return $this->machineProblem->where('confirmed', $status)->filter()->paginate(env('PER_PAGE'));
+    }
+
+    public function getMachineProblemById($id)
+    {
         return $this->machineProblem->find($id);
     }
 
-    public function getMachineProblemInfo($id){
+    public function getMachineProblemInfo($id)
+    {
         return $this->machineProblem->find($id)->Machine;
     }
 
-    public function storeMachineProblem($data){
+    public function storeMachineProblem($data)
+    {
         return $this->machineProblem->create($data);
     }
 
-    public function updateMachineProblem($id, $data){
+    public function updateMachineProblem($id, $data)
+    {
         return $this->machineProblem->find($id)->update($data);
     }
-    
-    
-
 }

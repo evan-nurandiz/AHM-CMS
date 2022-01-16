@@ -15,6 +15,7 @@ class CreateMachineProblemsTable extends Migration
     {
         Schema::create('machine_problems', function (Blueprint $table) {
             $table->id();
+            $table->integer('request_by');
             $table->integer('machine_id');
             $table->string('code');
             $table->string('symton_noise');
@@ -22,8 +23,9 @@ class CreateMachineProblemsTable extends Migration
             $table->string('area');
             $table->string('method');
             $table->string('at_gear')->nullable();
-            $table->string('diagram_image');
-            $table->string('sound');
+            $table->string('vidio');
+            $table->boolean('confirmed')->default(0);
+            $table->integer('assign_to');
             $table->timestamps();
         });
     }

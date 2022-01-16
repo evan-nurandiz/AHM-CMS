@@ -19,12 +19,12 @@ class MachineController extends Controller
     protected $machineRepository;
     protected $machineProblemRepository;
 
-    public function __construct(MachineRepository $machineRepository, MachineProblemRepository $machineProblemRepository) 
+    public function __construct(MachineRepository $machineRepository, MachineProblemRepository $machineProblemRepository)
     {
         $this->machineRepository = $machineRepository;
         $this->machineProblemRepository = $machineProblemRepository;
     }
-    
+
     /**
      * Display a listing of the resource.
      *
@@ -33,7 +33,7 @@ class MachineController extends Controller
     public function index($plant_number)
     {
         $machines =  $this->machineRepository->getMachineByPlantId($plant_number);
-        return view('admin.plant.machine.machine-list',compact('machines','plant_number'));
+        return view('admin.plant.machine.machine-list', compact('machines', 'plant_number'));
     }
 
     /**
@@ -43,7 +43,7 @@ class MachineController extends Controller
      */
     public function create($plant_number)
     {
-        return view('admin.plant.machine.machine-create',compact('plant_number'));
+        return view('admin.plant.machine.machine-create', compact('plant_number'));
     }
 
     /**
@@ -53,22 +53,22 @@ class MachineController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request, $plant_number)
-    {        
+    {
         try {
-            if($request->hasFile('image_temp')){
-                Helper::uploadContent('image', 'image_temp','machine_image/','machines','image');   
+            if ($request->hasFile('image_temp')) {
+                Helper::uploadContent('image', 'image_temp', 'machine_image/', 'machines', 'image');
             }
 
             DB::beginTransaction();
-            $create = $this->machineRepository->storeMachine($request->except('image_temp'));
+            $this->machineRepository->storeMachine($request->except('image_temp'));
             DB::commit();
-            return redirect()->route('admin.plant-machine-list',['plant_number' => $plant_number])->with('success','Berhasil Menambahkan Engine');
+            return redirect()->route('admin.plant-machine-list', ['plant_number' => $plant_number])->with('success', 'Berhasil Menambahkan Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
                 'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
             ]);
-        }    
+        }
     }
 
     /**
@@ -77,7 +77,7 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($plant_id,$machine_id)
+    public function show($plant_id, $machine_id)
     {
         $machine = $this->machineRepository->getMachineById($machine_id);
         $machineProblems = $this->machineProblemRepository->getMachineProblemByMachineId($machine_id);
@@ -103,7 +103,7 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($plant_id,$machine_id)
+    public function edit($plant_id, $machine_id)
     {
         $machine = $this->machineRepository->getMachineById($machine_id);
 
@@ -127,15 +127,15 @@ class MachineController extends Controller
     {
         $machine = $this->machineRepository->getMachineById($machine_id);
         try {
-            if($request->hasFile('image_temp')){
+            if ($request->hasFile('image_temp')) {
                 Storage::delete('/public/machine_image/' . $machine['image']);
-                Helper::uploadContent('image', 'image_temp','machine_image/','machines','image');   
+                Helper::uploadContent('image', 'image_temp', 'machine_image/', 'machines', 'image');
             }
 
             DB::beginTransaction();
             session()->flash('response', $this->machineRepository->updateMachine($machine_id, $request->all()));
             DB::commit();
-            return redirect()->back()->with('success','Berhasil Mengubah Engine');
+            return redirect()->back()->with('success', 'Berhasil Mengubah Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -150,15 +150,15 @@ class MachineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($plant_id,$machine_id)
+    public function destroy($plant_id, $machine_id)
     {
         try {
             DB::beginTransaction();
             $this->machineRepository->deleteMachine($machine_id);
             DB::commit();
-            return redirect()->route('admin.plant-machine-list',[
+            return redirect()->route('admin.plant-machine-list', [
                 'plant_number' => $plant_id
-            ])->with('success','Berhasil Menghapus Engine');
+            ])->with('success', 'Berhasil Menghapus Engine');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([
@@ -167,31 +167,32 @@ class MachineController extends Controller
         }
     }
 
-    public function filter(Request $request,$plant_number,$machine_id){
+    public function filter(Request $request, $plant_number, $machine_id)
+    {
         $queryParams = '';
 
-        if($request['code'] != null){
+        if ($request['code'] != null) {
             $queryParams .= '&like=code,' . $request['code'];
         }
 
-        if($request['symton_noise'] != null){ 
+        if ($request['symton_noise'] != null) {
             $queryParams .= '&like=symton_noise,' . implode(', ',  $request['symton_noise']);
         }
 
-        if($request['causing_part'] != null){
+        if ($request['causing_part'] != null) {
             $queryParams .= '&like=causing_part,' . $request['causing_part'];
         }
 
-        if($request['area'] != null){
+        if ($request['area'] != null) {
             $queryParams .= '&like=area,' . implode(', ',  $request['area']);
         }
-        
 
-        if($request['method'] != null){
+
+        if ($request['method'] != null) {
             $queryParams .= '&like=method,' . implode(', ', $request['method']);
         }
 
-        if($request['date'] != null){
+        if ($request['date'] != null) {
             $queryParams .= '&sort=created_at,' . $request['date'];
         }
 

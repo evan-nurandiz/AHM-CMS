@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Auth;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -39,10 +40,13 @@ class Handler extends ExceptionHandler
         });
 
         $this->renderable(function (\Exception $e) {
+            if (!Auth::check()) {
+                return redirect('/');
+            }
+
             if ($e->getPrevious() instanceof \Illuminate\Session\TokenMismatchException) {
-                return redirect()->route('/');
+                return redirect('/');
             };
         });
     }
-
 }
