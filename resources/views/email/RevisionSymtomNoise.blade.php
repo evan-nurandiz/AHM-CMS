@@ -1,20 +1,17 @@
 @component('mail::message')
-<p>
+</br>
 <h5>Greetings Mr {{ $details['head_name'] }} </h5>
 <br />
 <br />
-<p>Admin dengan Nama {{$details['user_name']}}</p>
+<p>Revisi Symtoms Noise oleh {{$details['user_name']}} </p> 
+<br/>
+<p> pada no engine {{$details['no_engine']}} telah dikirim pada</p>
 <br />
-<p>telah menambahkan sympton noise </p>
+<p>{{$details['update_at']}}</p>
 <br />
-<p>pada tanggal {{$details['date_at']}}</p>
-<br />
-<p>Silahkan Konfirmasi</p>
 @component('mail::button',['url' => env('APP_URL')])
 Verifikasi
 @endcomponent
 <br />
 <p>Terima Kasih</p>
-<br />
-</p>
 @endcomponent

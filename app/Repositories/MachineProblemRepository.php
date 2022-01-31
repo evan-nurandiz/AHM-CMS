@@ -3,8 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\machineProblem;
-use Illuminate\Support\Facades\Storage;
-use Exception;
 
 class MachineProblemRepository
 {

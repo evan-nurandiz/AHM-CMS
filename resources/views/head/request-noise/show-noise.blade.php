@@ -33,15 +33,15 @@
                     @csrf
                     @method('patch')
                     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#revision-modal">Revisi List</button>
-                    @if($data['noise']['confirmed'] != 1)
+                    @if($data['noise']['confirmed'] == 0)
                     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">Revisi</button>
                     <button type="submit" class="btn btn-success text-white" onclick="return confirm('Anda Yakin untuk Konfirmasi?')">Confirm</button>
                     @endif
                 </form>
             </div>
-            <div class="row justify-content-center mt-2 mt-lg-0">
+            <div class="row justify-content-center">
                 <div class="col-12 col-md-8 col-lg-6">
-                    <video src="{{ asset('storage/machine_vidio/'.$data['noise']['vidio']) }}" controls class="w-100 vidio-container">
+                    <video width="600" src="{{ asset('storage/machine_vidio/'.$data['noise']['vidio']) }}" controls class="vidio-container">
                         Your browser does not support HTML video.
                     </video>
                 </div>
@@ -76,10 +76,6 @@
     </div>
     <main>
 
-
-        @endsection
-
-        @section('bottom')
         <!-- Revision Modal -->
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
@@ -94,7 +90,7 @@
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Detail Revisi</label>
+                                <label for="exampleFormControlTextarea1">Deskripsi Revisi</label>
                                 <textarea name="description"></textarea>
                             </div>
                         </div>
@@ -140,6 +136,9 @@
                     <div>
                     </div>
                 </div>
+                @endsection
+
+                @section('bottom')
                 <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
                 <script>
                     CKEDITOR.replace('description');

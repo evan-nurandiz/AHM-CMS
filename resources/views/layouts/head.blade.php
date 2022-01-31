@@ -42,7 +42,7 @@
                     <!-- ============================================================== -->
                     <!-- Logo -->
                     <!-- ============================================================== -->
-                    <a class="navbar-brand w-xs-50" href="/admin/dashboard">
+                    <a class="navbar-brand w-xs-50" href="{{route('head.dashboard')}}">
                         <!-- Logo icon -->
                         <img src="/image/logo-astra-internasional.jpg" alt="homepage" class="w-75 w-lg-100" />
                     </a>
@@ -92,9 +92,15 @@
                             </a>
                         </li>
                         <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('head.plant-index')}}" aria-expanded="false">
+                                <i class=" fas fa-building" aria-hidden="true"></i>
+                                <span class="hide-menu">List Plan</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('head.request-noise',['status' => 0])}}" aria-expanded="false">
-                                <i class="fas fa-building" aria-hidden="true"></i>
-                                <span class="hide-menu">Request Noise List</span>
+                                <i class=" fas fa-tasks" aria-hidden="true"></i>
+                                <span class="hide-menu">Approval Status</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -136,7 +142,7 @@
             <div class="fixed-bottom d-block d-md-none d-lg-none" id="bottom-menu-mobile">
                 <div class="row align-items-center justify-content-between pt-2 px-2 shadow-lg">
                     <div class="col-3">
-                        <a href="" class="text-decoration-none">
+                        <a href="{{route('head.dashboard')}}" class="text-decoration-none">
                             <div class="text-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-display" viewBox="0 0 16 16">
                                     <path d="M0 4s0-2 2-2h12s2 0 2 2v6s0 2-2 2h-4c0 .667.083 1.167.25 1.5H11a.5.5 0 0 1 0 1H5a.5.5 0 0 1 0-1h.75c.167-.333.25-.833.25-1.5H2s-2 0-2-2V4zm1.398-.855a.758.758 0 0 0-.254.302A1.46 1.46 0 0 0 1 4.01V10c0 .325.078.502.145.602.07.105.17.188.302.254a1.464 1.464 0 0 0 .538.143L2.01 11H14c.325 0 .502-.078.602-.145a.758.758 0 0 0 .254-.302 1.464 1.464 0 0 0 .143-.538L15 9.99V4c0-.325-.078-.502-.145-.602a.757.757 0 0 0-.302-.254A1.46 1.46 0 0 0 13.99 3H2c-.325 0-.502.078-.602.145z" />
@@ -146,13 +152,18 @@
                         </a>
                     </div>
                     <div class="col-3">
+                        <a href="{{route('head.plant-index')}}" class="text-decoration-none">
+                            <div class="text-center">
+                                <i class=" fas fa-building" aria-hidden="true"></i>
+                                <p>List Plant</p>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-3">
                         <a href="{{route('head.request-noise',['status' => 0])}}" class="text-decoration-none">
                             <div class="text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
-                                    <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
-                                </svg>
-                                <p>Request List</p>
+                                <i class=" fas fa-tasks" aria-hidden="true"></i>
+                                <p>Approval Status</p>
                             </div>
                         </a>
                     </div>

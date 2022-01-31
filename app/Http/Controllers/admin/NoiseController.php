@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Models\Helper;
 use App\Models\User;
+use App\Models\machineProblem;
 use App\Http\Controllers\Controller;
 use App\Helpers\ExtractJsonHelpers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -56,7 +57,9 @@ class NoiseController extends Controller
     public function store(Request $request, $plant_id, $machine_id)
     {
         try {
-            Helper::uploadContent('vidio', 'vidio_temp', 'machine_vidio/', 'machine_problems', 'vidio');
+            if($request->has('vidio_temp')){
+                Helper::uploadContent('vidio', 'vidio_temp', 'machine_vidio/', 'machine_problems', 'vidio');
+            }
             $request['machine_id'] = $machine_id;
             $request['request_by'] = Auth::user()->id;
             $method = implode(',',  $request['method']);

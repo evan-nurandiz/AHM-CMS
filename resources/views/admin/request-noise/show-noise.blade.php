@@ -29,7 +29,7 @@
                 </div>
                 <div class="d-flex gap-2 justify-content-end">
                     <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#revision-modal">Revisi List</button>
-                    @if($data['noise']['confirmed'] != 1)
+                    @if($data['noise']['confirmed'] == 2)
                     <a href="{{route('admin.request-noise.edit',[
                         'status' => $data['status'],
                         'noise_id' => $data['noise']['id']    

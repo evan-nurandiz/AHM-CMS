@@ -12,6 +12,7 @@ use App\Http\Controllers\user\PlantController as UserPlantController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\head\DashboardController as DivisonHeadDashboardController;
 use App\Http\Controllers\head\NoiseController as DivisionHeadNoiseController;
+use App\Http\Controllers\head\PlantController as DivisionHeadPlantController;
 use App\Http\Controllers\superAdmin\UserController as SuperAdminUserController;
 
 /*
@@ -32,16 +33,6 @@ Auth::routes();
 Route::group(['prefix' => 'admin', 'middleware' => ['role:Admin']], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::post('/dashboard/create-engine', [DashboardController::class, 'createEngine']);
-    Route::resource('/dashboard/user', UserController::class, [
-        'names' => [
-            'index' => 'admin.dashboard-user',
-            'create' => 'admin.dashboard-user-create',
-            'store' => 'admin.dashboard-user-create.action',
-            'edit' => 'admin.dashboard-user-edit',
-            'update' => 'admin.dashboard-user-update.action',
-            'destroy' => 'admin.dashboard-user-destroy'
-        ]
-    ]);
 
     Route::prefix('/dashboard/list-plan')->group(function () {
         Route::get('/', [PlantController::class, 'index'])->name('admin.plant');
@@ -94,13 +85,25 @@ Route::group(['prefix' => 'user', 'middleware' => ['role:User']], function () {
     });
 });
 
-Route::group(['prefix' => 'Division-Head', 'middleware' => ['role:Division Head']], function () {
+Route::group(['prefix' => 'departement-head', 'middleware' => ['role:Division Head']], function () {
     Route::get('/dashboard', [DivisonHeadDashboardController::class, 'index'])->name('head.dashboard');
     Route::prefix('/request-noise')->group(function () {
         Route::get('/{status}', [DivisionHeadNoiseController::class, 'index'])->name('head.request-noise');
         Route::get('/{noise_id}/detail', [DivisionHeadNoiseController::class, 'detail'])->name('head.request-noise.detail');
         Route::post('/{noise_id}/revision', [DivisionHeadNoiseController::class, 'postRevision'])->name('head.request-noise.revision');
         Route::patch('/{noise_id}/confirm', [DivisionHeadNoiseController::class, 'confirmRevision'])->name('head.request-noise.confirm');
+    });
+
+    Route::prefix('/list-plan')->group(function () {
+        Route::get('/', [DivisionHeadPlantController::class, 'index'])->name('head.plant-index');
+        Route::get('/{plant_number}/detail', [DivisionHeadPlantController::class, 'detail'])->name('head.plant-detail');
+        Route::get('/{plant_number}/engine', [DivisionHeadPlantController::class, 'engineDetail'])->name('head.plant-engine');
+        Route::prefix('/{plant_number}/list-Engine')->group(function () {
+            Route::get('/', [DivisionHeadPlantController::class, 'engineNoise'])->name('head.plant-machine-list');
+            Route::get('/{machine_id}/detail', [DivisionHeadPlantController::class, 'engineShow'])->name('head.plant-machine-engine-show');
+            Route::get('/{machine_id}/{noise_id}/detail',[DivisionHeadPlantController::class,'engineNoiseDetail'])->name('head.plant-machine-noise');
+            Route::post('/{machine_id}/noise/filter', [DivisionHeadPlantController::class, 'filter'])->name('head.plant-machine-filter-noise');
+        });
     });
 });
 

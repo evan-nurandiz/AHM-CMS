@@ -75,7 +75,7 @@ class NoiseController extends Controller
             $noise->update(['confirmed' => 1]);
             NotificationHelpers::sendReviewNoise($noise['id']);
             DB::commit();
-            return redirect()->back()->with('success', 'Selamat Revisi Telah Diajukan');
+            return redirect()->back()->with('success', 'Selamat Revisi Berhasil Dikonfirmasi');
         } catch (ModelNotFoundException $exception) {
             DB::rollBack();
             return redirect()->back()->withInput()->withErrors([

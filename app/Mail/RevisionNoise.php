@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ReviewNoise extends Mailable
+class RevisionNoise extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -16,7 +16,6 @@ class ReviewNoise extends Mailable
      *
      * @return void
      */
-
     public $details;
 
     public function __construct($details)
@@ -31,6 +30,6 @@ class ReviewNoise extends Mailable
      */
     public function build()
     {
-        return $this->subject('Penambahan Symtoms Noise')->markdown('email.SymtomNoise');
+        return $this->subject('Revisi Symtoms Noise')->markdown('email.RevisionSymtomNoise');
     }
 }

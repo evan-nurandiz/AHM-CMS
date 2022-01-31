@@ -32,7 +32,7 @@ class machineProblem extends Model
         'in'
     ];
 
-    private $rule = [
+    public static $rule = [
         'request_by' => 'required',
         'symton_noise' => 'required',
         'causing_part' => 'required',

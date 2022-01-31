@@ -12,7 +12,7 @@ class MachineProblemRevision extends Model
     protected $table = "machine_problem_revisions";
     protected $fillable = ['request_by', 'noise_id', 'description', 'assign_to'];
 
-    private $rule = [
+    public static $rule = [
         'request_by' => 'required',
         'noise_id' => 'required',
         'description' => 'required',

@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Repositories\admin\NoiseRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Helpers\NotificationHelpers;
 use App\Helpers\ExtractJsonHelpers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -52,7 +53,7 @@ class RequestNoiseController extends Controller
         $area = ExtractJsonHelpers::getArea();
         $methods = ExtractJsonHelpers::getMethodList();
         $at_gears = ExtractJsonHelpers::getAtgearPart();
-        $noise['method'] = json_encode(explode(", ", $noise['method']));
+        $noise['method'] = json_encode(explode(",", $noise['method']));
 
         $data = [
             'symton_noises' => $symton_noises,
@@ -70,7 +71,7 @@ class RequestNoiseController extends Controller
     {
         try {
             $noise = $this->noiseRepository->getNoiseById($noise_id);
-            $method = implode(', ',  $request['method']);
+            $method = implode(',',  $request['method']);
             $request['method'] = $method;
 
             if ($request->hasFile('vidio_temp')) {
@@ -96,10 +97,11 @@ class RequestNoiseController extends Controller
             $noise = $this->noiseRepository->getNoiseById($noise_id);
 
             DB::beginTransaction();
-
             $noise->update([
-                'confirmed' => 2
+                'confirmed' => 0
             ]);
+
+            NotificationHelpers::sendRevisionNoise($noise['id']);
 
             DB::commit();
             return redirect()->back()->with('success', 'Berhasil Mengajukan Revisi Noise');

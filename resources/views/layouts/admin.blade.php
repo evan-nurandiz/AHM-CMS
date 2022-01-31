@@ -93,16 +93,10 @@
                                 <span class="hide-menu">Dashboard</span>
                             </a>
                         </li>
-                        <li class="sidebar-item">
-                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.dashboard-user')}}" aria-expanded="false">
-                                <i class="fa fa-user" aria-hidden="true"></i>
-                                <span class="hide-menu">Profile</span>
-                            </a>
-                        </li>
                         <li class="sidebar-item pt-2">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('admin.request-noise',['status' => 0])}}" aria-expanded="false">
-                                <i class="fas fa-building" aria-hidden="true"></i>
-                                <span class="hide-menu">Request Noise List</span>
+                                <i class=" fas fa-tasks" aria-hidden="true"></i>
+                                <span class="hide-menu">Approved Status</span>
                             </a>
                         </li>
                         <li class="sidebar-item">
@@ -156,21 +150,8 @@
                     <div class="col-3">
                         <a href="{{route('admin.request-noise',['status' => 0])}}" class="text-decoration-none">
                             <div class="text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
-                                    <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
-                                </svg>
-                                <p>Request Noise List</p>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="col-3">
-                        <a href="{{route('admin.dashboard-user')}}" class="text-decoration-none">
-                            <div class="text-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                </svg>
-                                <p>User</p>
+                                <i class=" fas fa-tasks" aria-hidden="true"></i>
+                                <p>Approval Status</p>
                             </div>
                         </a>
                     </div>

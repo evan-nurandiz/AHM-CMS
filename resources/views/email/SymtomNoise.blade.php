@@ -28,6 +28,9 @@
 <p>dengan Detail Sebagai Berikut</p>
 <br />
 <p>{!!$details['revision']!!}</p>
+@component('mail::button',['url' => env('APP_URL')])
+Verifikasi
+@endcomponent
 <br />
 <p>Terima Kasih</p>
 @endif
