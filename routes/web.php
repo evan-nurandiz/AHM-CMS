@@ -62,6 +62,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Admin']], function () 
         Route::get('/{status}/{noise_id}/edit', [RequestNoiseController::class, 'edit'])->name('admin.request-noise.edit');
         Route::patch('/{status}/{noise_id}/update', [RequestNoiseController::class, 'update'])->name('admin.request-noise.update');
         Route::post('/{status}/{noise_id}/request-revision', [RequestNoiseController::class, 'revisionRequest'])->name('admin.request-noise.revision');
+        Route::post('/{status}/{noise_id}/publish', [RequestNoiseController::class, 'publish'])->name('admin.publish-noise');
     });
 
     Route::get('/dashboard/machine-problem/{id}', [MachineController::class, 'AddMachineProblem'])->name('admin.machine-add-problem');
@@ -69,6 +70,8 @@ Route::group(['prefix' => 'admin', 'middleware' => ['role:Admin']], function () 
     Route::get('/dashboard/machine-problem/edit/{id}', [MachineController::class, 'EditMachineProblem'])->name('admin.machine-problem-edit');
     Route::post('/dashboard/machine-problem/{id}', [MachineController::class, 'StoreMachineProblem'])->name('admin.machine-problem-store');
     Route::put('/dashboard/machine-problem/{id}', [MachineController::class, 'updateMachineProblem'])->name('admin.machine-problem-update');
+
+    Route::post('/upload-noise-vidio', [NoiseController::class, 'upload'])->name('admin.upload-noise-vidio');
 });
 
 Route::group(['prefix' => 'user', 'middleware' => ['role:User']], function () {
@@ -101,7 +104,7 @@ Route::group(['prefix' => 'departement-head', 'middleware' => ['role:Division He
         Route::prefix('/{plant_number}/list-Engine')->group(function () {
             Route::get('/', [DivisionHeadPlantController::class, 'engineNoise'])->name('head.plant-machine-list');
             Route::get('/{machine_id}/detail', [DivisionHeadPlantController::class, 'engineShow'])->name('head.plant-machine-engine-show');
-            Route::get('/{machine_id}/{noise_id}/detail',[DivisionHeadPlantController::class,'engineNoiseDetail'])->name('head.plant-machine-noise');
+            Route::get('/{machine_id}/{noise_id}/detail', [DivisionHeadPlantController::class, 'engineNoiseDetail'])->name('head.plant-machine-noise');
             Route::post('/{machine_id}/noise/filter', [DivisionHeadPlantController::class, 'filter'])->name('head.plant-machine-filter-noise');
         });
     });

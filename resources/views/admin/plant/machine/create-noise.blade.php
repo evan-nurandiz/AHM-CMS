@@ -13,6 +13,27 @@
             height: 200px
         }
     }
+
+    .loader {
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid #3498db;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite; /* Safari */
+        animation: spin 2s linear infinite;
+    }
+
+        /* Safari */
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
 </style>
 @endsection
 
@@ -42,12 +63,11 @@
             </div>
             <div class="form-group mb-4">
                 <p>Symptoms Noise <span id="required">*</span></p>
-                <select class="form-select" aria-label="Default select example">
+                <select class="form-select" aria-label="Default select example" name="symton_noise">
                     <option selected>Open this select menu</option>
                     @foreach($data['symton_noises'] as $symton_noise)
                     <option value="{{$symton_noise['symton_name']}}" id="symton-noise-input" for="symton_noise">{{$symton_noise['symton_name']}}</option>
                     @endforeach
-                    <input type="hidden" name="symton_noise" required id="symton_noise">
                 </select>
             </div>
             <div class="form-group mb-4">
@@ -86,9 +106,7 @@
             <div class="form-group mb-4" id="at-gear-wrap">
                 <p>Assign To</p>
                 <select class="form-select" aria-label="Default select example" name="assign_to">
-                    @foreach($data['head_department_list'] as $head_department)
-                    <option value="{{$head_department['id']}}" id="at-gear-input" selected>{{$head_department['name']}}</option>
-                    @endforeach
+                    <option value="{{Auth::user()->superVisor->id}}" id="at-gear-input" selected>{{Auth::user()->superVisor->name}}</option>
                 </select>
             </div>
             <div class="mx-auto my-lg-4">
@@ -99,59 +117,77 @@
                         </video>
                     </div>
                     <div class="col-12 text-center">
-                        <label type="submit" class="btn bg-base rounded-lg text-white" for="vidio">Upload Vidio</label>
+                        <label type="submit" class="btn bg-base rounded-lg vidio-upload-label text-white" for="vidio">Upload Vidio</label>
                         <input type="file" class="d-none" name="vidio_temp" id="vidio">
                     </div>
+                    <input type="text" class="d-none" name="vidio">
+                    <div class="loader d-none"></div>
                 </div>
             </div>
             <button type="submit" class="btn btn-primary w-100 rounded-lg">Simpan</button>
         </form>
     </div>
     <main>
-        @endsection
+@endsection
 
-        @section('bottom')
-        <script>
-            //Preview Image
-            const vidioInput = document.querySelector('#vidio')
+@section('bottom')
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
 
-            vidioInput.addEventListener('input', (e) => {
-                const [file] = vidioInput.files
-                console.log(URL.createObjectURL(file))
-                if (file && file.size < 20097152) {
-                    document.querySelector('.vidio-container').classList.remove('d-none')
-                    let blobURL = URL.createObjectURL(file);
-                    document.querySelector('.vidio-container').src = blobURL
-                } else {
-                    return alert('Maximal File Upload 20MB');
-                }
-            })
+    const inputVidio = document.querySelector('input[name=vidio_temp]')
+    const vidioContainer = document.querySelector('.vidio-container')
+    const loader = document.querySelector('.loader')
+    const vidioUploadLabel = document.querySelector('label.vidio-upload-label')
+    let fileName = ''
 
-            //Symton Noise Dropdown
-            const symtonNoiseInput = document.querySelector('#symton_noise')
-            const symtonNoiseOptions = document.querySelectorAll('#symton-noise-input')
+    inputVidio.addEventListener('input',(e) => {
+        loader.classList.remove('d-none')
+        vidioUploadLabel.classList.add('d-none')
+        let formData = new FormData()
+        if(fileName != ''){
+            formData.append("prev_vidio",fileName) 
+        }
+        formData.append("vidio_temp",e.target.files[0])
+        $.ajax({
+            type:'POST',
+            url: "{{ route('admin.upload-noise-vidio')}}",
+            data:formData,
+            processData: false,
+            contentType: false,
+            success: function (response) {
+                console.log(response)
+                vidioContainer.classList.remove('d-none')
+                vidioContainer.src = "{{env('APP_URL')}}"+"/storage/machine_vidio/"+response
+                loader.classList.add('d-none')
+                document.querySelector('input[name=vidio]').value = response
+                fileName = response
+                vidioUploadLabel.classList.remove('d-none')
+                vidioUploadLabel.innerHTML = 'Ganti Vidio'
+            }
+        });
 
-            symtonNoiseOptions.forEach((symtonNoiseOption, i) => {
-                symtonNoiseOption.addEventListener('click', () => {
-                    symtonNoiseInput.value = symtonNoiseOption.value
-                })
-            })
+    })
 
-            //Method
-            const methodInput = document.querySelector('#method')
-            const methodInputOptions = document.querySelectorAll('#method-input')
-            const atGearWrapper = document.querySelector('#at-gear-wrap')
+    //Method
+    const methodInput = document.querySelector('#method')
+    const methodInputOptions = document.querySelectorAll('#method-input')
+    const atGearWrapper = document.querySelector('#at-gear-wrap')
 
-            methodInputOptions.forEach((methodInputOption, i) => {
-                methodInputOption.addEventListener('click', () => {
-                    methodInput.value = methodInputOption.value
-                    if (methodInput.value !== 'Idle') {
-                        atGearWrapper.classList.remove("d-none")
-                    } else {
-                        atGearWrapper.classList.add("d-none")
-                        methodInput.value = ''
-                    }
-                })
-            })
-        </script>
-        @endsection
+    methodInputOptions.forEach((methodInputOption, i) => {
+        methodInputOption.addEventListener('click', () => {
+            methodInput.value = methodInputOption.value
+            if (methodInput.value !== 'Idle') {
+                atGearWrapper.classList.remove("d-none")
+            } else {
+                atGearWrapper.classList.add("d-none")
+                methodInput.value = ''
+            }
+        })
+    })
+</script>
+@endsection

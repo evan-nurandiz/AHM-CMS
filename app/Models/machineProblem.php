@@ -38,7 +38,7 @@ class machineProblem extends Model
         'causing_part' => 'required',
         'code' => 'required',
         'method' => 'required',
-        'vidio' => 'required',
+        'vidio_temp' => 'required',
         'assign_to' => 'required'
     ];
 

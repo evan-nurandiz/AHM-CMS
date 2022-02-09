@@ -15,6 +15,11 @@
 <br />
 <p>{{$details['update_at']}}</p>
 <br />
+<p>Silahkan Di Publish</p>
+@component('mail::button',['url' => env('APP_URL')])
+Publish
+@endcomponent
+<br>
 <p>Terima Kasih</p>
 @else
 <h5>Greetings Mr {{ $details['user_name'] }} </h5>

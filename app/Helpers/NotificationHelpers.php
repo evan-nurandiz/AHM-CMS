@@ -24,7 +24,8 @@ class NotificationHelpers
         Mail::to($noise['AssignTo']['email'])->send(new RequestReviewNoise($details));
     }
 
-    public static function sendRevisionNoise($noise_id){
+    public static function sendRevisionNoise($noise_id)
+    {
         $noise = machineProblem::find($noise_id);
 
         $details = [
@@ -43,7 +44,7 @@ class NotificationHelpers
         $noise = machineProblem::find($noise_id);
 
 
-        if ($noise['confirmed'] == 1) {
+        if ($noise['confirmed'] == 3) {
             $details = [
                 'status' => 'confirmed',
                 'head_name' => $noise['AssignTo']['name'],

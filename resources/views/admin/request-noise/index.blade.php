@@ -23,19 +23,24 @@
     <div class="row  mb-xs-60">
         <div class="col-12 px-0 py-4 px-4 bg-white">
             <div class="row justify-content-center">
-                <div class="col-12 col-lg-4 text-center p-2" id="{{$data['status'] == 0 ? 'active-menu' : ''}}">
+                <div class="col-12 col-lg-3 text-center p-2" id="{{$data['status'] == 0 ? 'active-menu' : ''}}">
                     <a href="{{route('admin.request-noise',['status' => 0])}}" class="text-decoration-none ">
                         <p class="{{$data['status'] == 0 ? 'text-white' : 'text-black'}}">Diajukan</p>
                     </a>
                 </div>
-                <div class="col-12 col-lg-4 text-center p-2" id="{{$data['status'] == 2 ? 'active-menu' : ''}}">
+                <div class="col-12 col-lg-3 text-center p-2" id="{{$data['status'] == 2 ? 'active-menu' : ''}}">
                     <a href="{{route('admin.request-noise',['status' => 2])}}" class="text-decoration-none ">
                         <p class="{{$data['status'] == 2 ? 'text-white' : 'text-black'}}">Revisi</p>
                     </a>
                 </div>
-                <div class="col-12 col-lg-4 text-center p-2" id="{{$data['status'] == 1 ? 'active-menu' : ''}}">
+                <div class="col-12 col-lg-3 text-center p-2" id="{{$data['status'] == 3 ? 'active-menu' : ''}}">
+                    <a href="{{route('admin.request-noise',['status' => 3])}}" class="text-decoration-none">
+                        <p class="{{$data['status'] == 3 ? 'text-white' : 'text-black'}}">Diterima</p>
+                    </a>
+                </div>
+                <div class="col-12 col-lg-3 text-center p-2" id="{{$data['status'] == 1 ? 'active-menu' : ''}}">
                     <a href="{{route('admin.request-noise',['status' => 1])}}" class="text-decoration-none">
-                        <p class="{{$data['status'] == 1 ? 'text-white' : 'text-black'}}">Diterima</p>
+                        <p class="{{$data['status'] == 1 ? 'text-white' : 'text-black'}}">Di Publish</p>
                     </a>
                 </div>
             </div>

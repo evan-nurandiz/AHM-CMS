@@ -29,6 +29,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'head_id'
     ];
 
     /**
@@ -49,4 +50,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function superVisor(){
+        return $this->hasOne(User::class,'id','head_id');
+    }
 }

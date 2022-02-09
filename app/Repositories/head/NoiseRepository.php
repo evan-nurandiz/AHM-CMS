@@ -28,4 +28,14 @@ class NoiseRepository
 
         return $data;
     }
+
+    public function getNoiseNeedRiview($user_id, $status)
+    {
+        return $this->machineProblem->where('assign_to', $user_id)->where('confirmed', $status)->paginate(12);
+    }
+
+    public function getMachineProblemById($id)
+    {
+        return $this->machineProblem->find($id);
+    }
 }

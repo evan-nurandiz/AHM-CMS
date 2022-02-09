@@ -36,7 +36,9 @@ class UserController extends Controller
 
     public function create()
     {
-        return view('super-admin.create');
+        $headList = $this->userRepository->getHeadDivision();
+        
+        return view('super-admin.create', compact('headList'));
     }
 
     public function store(Request $request)
@@ -49,6 +51,12 @@ class UserController extends Controller
             $request['password'] =  Hash::make($request['password']);
         }
 
+        if($request['role'] != 'Admin'){
+            if($request['head_id'] == 0){
+                $request['head_id'] = null;
+            }
+        }
+       
         try {
             DB::beginTransaction();
             $this->userRepository->storeUser($request->except(['role', 'confirm-password']), $request['role']);
@@ -64,8 +72,9 @@ class UserController extends Controller
 
     public function edit($user_id)
     {
+        $headList = $this->userRepository->getHeadDivision();
         $user = $this->userRepository->getUserById($user_id);
-        return view('super-admin.edit', compact('user'));
+        return view('super-admin.edit', compact('user','headList'));
     }
 
     public function update(Request $request, $user_id)

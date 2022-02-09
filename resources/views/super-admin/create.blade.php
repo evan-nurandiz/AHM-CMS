@@ -33,11 +33,20 @@
                     <div class="mb-3">
                         <label for="inputState">Role <span id="required">*</span></label>
                         <select id="inputState" class="form-control" required name="role">
-                            <option selected>Choose</option>
-                            <option value="Admin">Admin</option>
-                            <option value="User">User</option>
-                            <option value="Division Head">Divison Head</option>
-                            <option value="Super Admin">Super Admin</option>
+                            <option selected id="role-input">Choose</option>
+                            <option value="Admin" id="role-input">Admin</option>
+                            <option value="User" id="role-input">User</option>
+                            <option value="Division Head" id="role-input">Divison Head</option>
+                            <option value="Super Admin" id="role-input">Super Admin</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 d-none" id="super-visor-section">
+                        <label for="super-visor">Super Visor<span id="required">*</span></label>
+                        <select id="super-visor" class="form-control" name="head_id">
+                            <option value="0" selected>Choose</option>
+                            @foreach($headList as $headList)
+                            <option value="{{$headList['id']}}">{{$headList['name']}}</option>
+                            @endforeach
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
@@ -46,8 +55,21 @@
         </div>
     </div>
     <main>
-        @endsection
+@endsection
 
-        @section('bottom')
+@section('bottom')
+<script>
+    const RoleInput = document.querySelector('#inputState')
+    const RoleInputOptions = document.querySelectorAll('#inputState #role-input')
 
-        @endsection
+    RoleInputOptions.forEach((RoleInputOption,i) => {
+        RoleInputOption.addEventListener('click',() => {
+            if(RoleInput.value == 'Admin'){
+                document.querySelector('#super-visor-section').classList.remove('d-none')
+            }else{
+                document.querySelector('#super-visor-section').classList.add('d-none')
+            }
+        })
+    })
+</script>
+@endsection

@@ -4,7 +4,7 @@ namespace App\Http\Controllers\head;
 
 use App\Helpers\NotificationHelpers;
 use App\Http\Controllers\Controller;
-use App\Repositories\MachineProblemRepository;
+use App\Repositories\head\NoiseRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,16 +13,16 @@ use Illuminate\Support\Facades\Auth;
 class NoiseController extends Controller
 {
 
-    protected $machineProblemRepository;
+    protected $noiseRepository;
 
-    public function __construct(MachineProblemRepository $machineProblemRepository)
+    public function __construct(NoiseRepository $noiseRepository)
     {
-        $this->machineProblemRepository = $machineProblemRepository;
+        $this->noiseRepository = $noiseRepository;
     }
 
     public function index($status)
     {
-        $noises = $this->machineProblemRepository->getMachineProblemWithStatus($status);
+        $noises = $this->noiseRepository->getNoiseNeedRiview(Auth::user()->id, $status);
 
         $data = [
             'noises' => $noises,
@@ -34,7 +34,7 @@ class NoiseController extends Controller
 
     public function detail($noise_id)
     {
-        $noise = $this->machineProblemRepository->getMachineProblemById($noise_id);
+        $noise = $this->noiseRepository->getMachineProblemById($noise_id);
 
         $data = [
             'noise' => $noise
@@ -45,7 +45,7 @@ class NoiseController extends Controller
 
     public function postRevision(Request $request, $noise_id)
     {
-        $noise = $this->machineProblemRepository->getMachineProblemById($noise_id);
+        $noise = $this->noiseRepository->getMachineProblemById($noise_id);
 
         try {
             $request['request_by'] = Auth::user()->id;
@@ -68,11 +68,11 @@ class NoiseController extends Controller
 
     public function confirmRevision($noise_id)
     {
-        $noise = $this->machineProblemRepository->getMachineProblemById($noise_id);
+        $noise = $this->noiseRepository->getMachineProblemById($noise_id);
 
         try {
             DB::beginTransaction();
-            $noise->update(['confirmed' => 1]);
+            $noise->update(['confirmed' => 3]);
             NotificationHelpers::sendReviewNoise($noise['id']);
             DB::commit();
             return redirect()->back()->with('success', 'Selamat Revisi Berhasil Dikonfirmasi');

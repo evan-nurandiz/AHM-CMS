@@ -112,4 +112,24 @@ class RequestNoiseController extends Controller
             ]);
         }
     }
+
+    public function publish($status, $noise_id)
+    {
+        try {
+            $noise = $this->noiseRepository->getNoiseById($noise_id);
+
+            DB::beginTransaction();
+            $noise->update([
+                'confirmed' => 1
+            ]);
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Berhasil Memplublish Symton Noise');
+        } catch (ModelNotFoundException $exception) {
+            DB::rollBack();
+            return redirect()->back()->withInput()->withErrors([
+                'message' => 'Sorry, there was an error in your request. Please try again in a moment.',
+            ]);
+        }
+    }
 }

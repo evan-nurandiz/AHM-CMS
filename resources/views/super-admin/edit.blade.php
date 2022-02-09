@@ -30,8 +30,20 @@
                         <select id="inputState" class="form-control" name="role">
                             <option value="Admin" {{$user->getRoleNames()[0] == 'Admin' ? 'selected' : ''}}>Admin</option>
                             <option value="user" {{$user->getRoleNames()[0] == 'User' ? 'selected' : ''}}>User</option>
+                            <option value="user" {{$user->getRoleNames()[0] == 'Super Admin' ? 'selected' : ''}}>Super Admin</option>
+                            <option value="user" {{$user->getRoleNames()[0] == 'Division Head' ? 'selected' : ''}}>Kepala Divisi</option>
                         </select>
                     </div>
+                    @if($user->getRoleNames()[0] == 'Admin')
+                    <div class="mb-3" id="super-visor-section">
+                        <label for="super-visor">Super Visor<span id="required">*</span></label>
+                        <select id="super-visor" class="form-control" required name="head_id">
+                            @foreach($headList as $headList)
+                            <option value="{{$headList['id']}}" {{$user->head_id == $headList['id'] ? 'selected' : ''}}>{{$headList['name']}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    @endif
                     <h4 class="mt-5 mb-2 text-gray">Jika Ingin Mengganti Password</h4>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -47,4 +59,4 @@
         </div>
     </div>
     <main>
-        @endsection
+@endsection

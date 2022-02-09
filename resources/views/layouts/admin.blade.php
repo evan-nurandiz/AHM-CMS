@@ -18,6 +18,7 @@
     <link href="{{ asset('css/style.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     <link rel="shortcut icon" href="/logo.ico">
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
     @yield('style')
 </head>
 
@@ -129,7 +130,7 @@
                 </div>
                 @endif
                 @if($errors->any())
-                <div class="alert alert-success" role="alert">
+                <div class="alert alert-danger" role="alert">
                     {{$errors->first()}}
                 </div>
                 @endif

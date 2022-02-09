@@ -22,21 +22,33 @@
 <main id="request-noise">
     <div class="row  mb-xs-60">
         <div class="col-12 px-0 py-4 px-4 bg-white">
-            <div class="d-flex gap-4 justify-content-between align-items-start mx-0 mb-lg-4">
-                <div>
-                    <p class="text-secondary">Jumlah Revisi</p>
-                    <h4s>{{count($data['noise']['revision'])}}</h4s>
+            <div class="row gap-4 justify-content-between align-items-start mx-0 mb-lg-4">
+                <div class="col-4">
+                    <div>
+                        <p class="text-secondary">Jumlah Revisi</p>
+                        <h4s>{{count($data['noise']['revision'])}}</h4s>
+                    </div>
                 </div>
-                <div class="d-flex gap-2 justify-content-end">
-                    <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#revision-modal">Revisi List</button>
-                    @if($data['noise']['confirmed'] == 2)
-                    <a href="{{route('admin.request-noise.edit',[
-                        'status' => $data['status'],
-                        'noise_id' => $data['noise']['id']    
-                    ])}}">
-                        <button type="button" class="btn btn-info text-white">Edit</button>
-                    </a>
-                    @endif
+                <div class="col-3">
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#revision-modal">Revisi List</button>
+                        @if($data['noise']['confirmed'] == 2)
+                        <a href="{{route('admin.request-noise.edit',[
+                            'status' => $data['status'],
+                            'noise_id' => $data['noise']['id']    
+                        ])}}">
+                            <button type="button" class="btn btn-info text-white">Edit</button>
+                        </a>
+                        @elseif($data['noise']['confirmed'] == 3)
+                        <form action="{{route('admin.publish-noise',[
+                            'status' => $data['status'],
+                            'noise_id' => $data['noise']['id']
+                        ])}}" class="col-6 text-end px-0" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-success text-white" onclick="return confirm('Anda Yakin untuk Konfirmasi?')">Publish</button>
+                        </form>
+                        @endif
+                    </div>
                 </div>
             </div>
             <div class="row justify-content-center">
