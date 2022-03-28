@@ -14,6 +14,7 @@ use App\Http\Controllers\head\DashboardController as DivisonHeadDashboardControl
 use App\Http\Controllers\head\NoiseController as DivisionHeadNoiseController;
 use App\Http\Controllers\head\PlantController as DivisionHeadPlantController;
 use App\Http\Controllers\superAdmin\UserController as SuperAdminUserController;
+use App\Http\Controllers\superAdmin\NoiseController as SuperAdminNoiseController;
 
 /*
 |--------------------------------------------------------------------------
@@ -88,7 +89,7 @@ Route::group(['prefix' => 'user', 'middleware' => ['role:User']], function () {
     });
 });
 
-Route::group(['prefix' => 'departement-head', 'middleware' => ['role:Division Head']], function () {
+Route::group(['prefix' => 'kepala-seksi', 'middleware' => ['role:Division Head']], function () {
     Route::get('/dashboard', [DivisonHeadDashboardController::class, 'index'])->name('head.dashboard');
     Route::prefix('/request-noise')->group(function () {
         Route::get('/{status}', [DivisionHeadNoiseController::class, 'index'])->name('head.request-noise');
@@ -111,12 +112,20 @@ Route::group(['prefix' => 'departement-head', 'middleware' => ['role:Division He
 });
 
 Route::group(['prefix' => 'Super-Admin', 'middleware' => ['role:Super Admin']], function () {
-    Route::prefix('/dashboard/user')->group(function () {
-        Route::get('/role/{role}', [SuperAdminUserController::class, 'index'])->name('super-admin.user.index');
-        Route::get('/create', [SuperAdminUserController::class, 'create'])->name('super-admin.user.create');
-        Route::post('/store', [SuperAdminUserController::class, 'store'])->name('super-admin.user.store');
-        Route::get('/{user_id}/edit', [SuperAdminUserController::class, 'edit'])->name('super-admin.user.edit');
-        Route::patch('/{user_id}/update', [SuperAdminUserController::class, 'update'])->name('super-admin.user.update');
+    Route::prefix('/dashboard')->group(function () {
+        Route::prefix('/user')->group(function () {
+            Route::get('/role/{role}', [SuperAdminUserController::class, 'index'])->name('super-admin.user.index');
+            Route::get('/create', [SuperAdminUserController::class, 'create'])->name('super-admin.user.create');
+            Route::post('/store', [SuperAdminUserController::class, 'store'])->name('super-admin.user.store');
+            Route::get('/{user_id}/edit', [SuperAdminUserController::class, 'edit'])->name('super-admin.user.edit');
+            Route::patch('/{user_id}/update', [SuperAdminUserController::class, 'update'])->name('super-admin.user.update');
+        });
+        Route::prefix('/noise')->group(function () {
+            Route::get('/{status}', [SuperAdminNoiseController::class, 'noise'])->name('super-admin.noise.index');
+            Route::get('/{status}/{noise_id}',[SuperAdminNoiseController::class,'detail'])->name('super-admin.noise-show');
+            Route::post('/{noise_id}/revision', [SuperAdminNoiseController::class, 'postRevision'])->name('super-admin.request-noise.revision');
+            Route::patch('/{status}/{noise_id}',[SuperAdminNoiseController::class,'update'])->name('super-admin.noise-update');
+        });
     });
 });
 

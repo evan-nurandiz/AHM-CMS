@@ -91,6 +91,12 @@
                                 <span class="hide-menu">User</span>
                             </a>
                         </li>
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{route('super-admin.noise.index',['status' => 3])}}" aria-expanded="false">
+                                <i class=" fas fa-tasks" aria-hidden="true"></i>
+                                <span class="hide-menu">Publish Noise</span>
+                            </a>
+                        </li>
                         <li class="sidebar-item">
                             <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{{ route('logout') }}" aria-expanded="false" onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">

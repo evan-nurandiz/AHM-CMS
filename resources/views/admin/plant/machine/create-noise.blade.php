@@ -104,6 +104,12 @@
                 </select>
             </div>
             <div class="form-group mb-4" id="at-gear-wrap">
+                <label for="exampleFormControlTextarea1">Deskripsi <span id="required">*</span></label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" rows="3" name="description">
+                
+                </textarea>
+            </div>
+            <div class="form-group mb-4" id="at-gear-wrap">
                 <p>Assign To</p>
                 <select class="form-select" aria-label="Default select example" name="assign_to">
                     <option value="{{Auth::user()->superVisor->id}}" id="at-gear-input" selected>{{Auth::user()->superVisor->name}}</option>

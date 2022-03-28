@@ -50,7 +50,7 @@ $kernel = $app->make(Kernel::class);
 
 define('CONFIRM_STATUS', [
     '0' => 'Menunggu Konfirmasi',
-    '1' => 'Diterima',
+    '1' => 'Di Publish',
     '2' => 'Revisi',
     '3' => 'Menunggu Publish Admin'
 ]);

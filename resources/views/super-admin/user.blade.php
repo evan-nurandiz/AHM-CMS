@@ -32,7 +32,7 @@
                     </div>
                     <div class="col-6 mb-2 text-center p-2" id="{{$data['role'] == 'Division Head' ? 'active-menu' : ''}}">
                         <a href="{{route('super-admin.user.index',['role' => 'Division Head'])}}">
-                            <p class="{{$data['role'] == 'Division Head' ? 'text-white' : 'text-black'}}">Head Division</p>
+                            <p class="{{$data['role'] == 'Division Head' ? 'text-white' : 'text-black'}}">Section Head</p>
                         </a>
                     </div>
                     <div class="col-6 mb-2 text-center p-2" id="{{$data['role'] == 'Super Admin' ? 'active-menu' : ''}}">

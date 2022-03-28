@@ -24,6 +24,7 @@ class machineProblem extends Model
         'confirmed',
         'keterangan',
         'assign_to',
+        'description'
     ];
 
     protected $filters = [
@@ -39,7 +40,8 @@ class machineProblem extends Model
         'code' => 'required',
         'method' => 'required',
         'vidio_temp' => 'required',
-        'assign_to' => 'required'
+        'assign_to' => 'required',
+        'description' => 'required'
     ];
 
     public function Machine()

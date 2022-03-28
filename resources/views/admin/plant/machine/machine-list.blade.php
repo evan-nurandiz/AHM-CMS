@@ -28,6 +28,18 @@
         border-top-right-radius: 12px !important;
         max-height: 260px;
     }
+
+    #dashboard #add-engine-button{
+        height: 320px;
+        border-radius: 12px;
+    }
+
+    @media only screen and (max-width: 800px) {
+        #dashboard #input-image-preview,
+        #dashboard #sound-priview {
+            height: 200px
+        }
+    }
 </style>
 @endsection
 
@@ -35,13 +47,7 @@
 <main id="dashboard">
     <div class="row  mb-xs-60">
         <div class="col-12 col-lg-12 py-4 bg-white min-100vh">
-            <div class="d-flex justify-content-between">
-                <h3>List Engine</h4>
-                    <a href="{{route('admin.plant-machine-add',['plant_number' => $plant_number])}}">
-                        <button type="button" class="btn bg-base rounded text-white">Tambah Engine</button>
-                    </a>
-            </div>
-            <div class="row justify-conten-start gap-2 w-100 mx-0 mt-lg-5">
+            <div class="row justify-content-start gap-2 w-100 mx-0 mt-lg-5">
                 @foreach($machines as $machine)
                 <div class="col-12 col-lg-3 mt-4 mt-lg-0 machine-wrapper h-lg-100 px-0">
                     <a href="{{route('admin.plant-machine-detail',
@@ -59,6 +65,15 @@
                     </a>
                 </div>
                 @endforeach
+                <div class="col-12 pb-4 col-lg-3 mt-4 mt-lg-0 machine-wrapper h-lg-100 px-0">
+                    <a id="add-engine-button" href="{{route('admin.plant-machine-add',['plant_number' => $plant_number])}}" type="button" 
+                    class="d-flex justify-content-center align-items-center bg-base btn w-100">
+                        <div>
+                            <h1 class="text-white">+</h1>
+                            <h3 class="text-white">Tambah Engine</h3>
+                        </div>
+                    </a>
+                </div>
                 <div class="d-flex mt-4 justify-content-center">
                     {!! $machines->links() !!}
                 </div>

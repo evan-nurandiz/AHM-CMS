@@ -41,6 +41,10 @@
                 <h4>{{$data['machineProblem']['at_gear']}}</h4>
             </div>
             @endif
+            <div class="mt-4">
+                <p class="text-secondary mb-1">Deskripsi</p>
+                <h4>{{$data['machineProblem']['description']}}</h4>
+            </div>
         </div>
     </div>
     <main>

@@ -1,5 +1,14 @@
 [
     {
+        "area": "Cyl Comp"
+    },
+    {
+        "area": "Crankcase L"
+    },
+    {
+        "area": "Crankcase R"
+    },
+    {
         "area": "Cyl Head"
     },
     {

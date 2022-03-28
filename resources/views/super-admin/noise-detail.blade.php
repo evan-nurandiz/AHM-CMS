@@ -1,51 +1,38 @@
-@extends('layouts.admin')
+@extends('layouts.super-admin')
 
 @section('style')
 <style>
     p {
-        margin: 0px !important;
-    }
-
-    #request-noise .plant {
-        height: 320px;
-    }
-
-    @media only screen and (max-width: 800px) {
-        #request-noise .plant {
-            height: 200px
-        }
+        margin: 0px;
     }
 </style>
 @endsection
 
 @section('content')
-<main id="request-noise">
-    <div class="row  mb-xs-60">
+<main id="User">    
+<div class="row">
         <div class="col-12 px-0 py-4 px-4 bg-white">
-            <div class="row gap-4 justify-content-between align-items-start mx-0 mb-lg-4">
-                <div class="col-4">
-                    <div>
-                        <p class="text-secondary">Jumlah Revisi</p>
-                        <h4s>{{count($data['noise']['revision'])}}</h4s>
-                    </div>
+            <div class="d-flex gap-4 justify-content-between align-items-start mx-0 mb-lg-4">
+                <div>
+                    <p class="text-secondary">Jumlah Revisi</p>
+                    <h4s>{{count($data['noise']['revision'])}}</h4s>
                 </div>
-                <div class="col-3">
-                    <div class="d-flex gap-2 justify-content-end">
-                        <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#revision-modal">Revisi List</button>
-                        @if($data['noise']['confirmed'] == 2)
-                        <a href="{{route('admin.request-noise.edit',[
-                            'status' => $data['status'],
-                            'noise_id' => $data['noise']['id']    
-                        ])}}">
-                            <button type="button" class="btn btn-info text-white">Edit</button>
-                        </a>
-                        @endif
-                    </div>
-                </div>
+                <form action="{{route('super-admin.noise-update',[
+                        'status' => 0,
+                        'noise_id' => $data['noise']['id']
+                    ])}}" method="POST">
+                    @csrf
+                    @method('patch')
+                    @if($data['noise']['confirmed'] == 3)
+                    <button type="submit" class="btn btn-success text-white" onclick="return confirm('Anda Yakin untuk Publish?')">Publish</button>
+                    <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">Revisi</button>
+                    <button type="submit" class="btn btn-success text-white" onclick="return confirm('Anda Yakin untuk Konfirmasi?')">Confirm</button>
+                    @endif
+                </form>
             </div>
             <div class="row justify-content-center">
-                <div class="col-12 col-md-8 col-lg-6 my-3 my-lg-0">
-                    <video src="{{ asset('storage/machine_vidio/'.$data['noise']['vidio']) }}" controls class="w-100 vidio-container">
+                <div class="col-12 col-md-8 col-lg-6">
+                    <video width="600" src="{{ asset('storage/machine_vidio/'.$data['noise']['vidio']) }}" controls class="vidio-container">
                         Your browser does not support HTML video.
                     </video>
                 </div>
@@ -82,27 +69,22 @@
             </div>
         </div>
     </div>
-    <main>
-
-
-        @endsection
-
-        @section('bottom')
-        <!-- Revision Modal -->
-        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<main>
+<!-- Revision Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Revisi Noise Request</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <form action="{{route('head.request-noise.revision',[
+                    <form action="{{route('super-admin.request-noise.revision',[
                 'noise_id' => $data['noise']['id']
             ])}}" method="post">
                         @csrf
                         <div class="modal-body">
                             <div class="form-group">
-                                <label for="exampleFormControlTextarea1">Example textarea</label>
+                                <label for="exampleFormControlTextarea1">Deskripsi Revisi</label>
                                 <textarea name="description"></textarea>
                             </div>
                         </div>
@@ -148,6 +130,9 @@
                     <div>
                     </div>
                 </div>
+                @endsection
+
+                @section('bottom')
                 <script src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
                 <script>
                     CKEDITOR.replace('description');

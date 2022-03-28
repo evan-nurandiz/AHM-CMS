@@ -122,6 +122,12 @@
                 </select>
             </div>
             @endif
+            <div class="form-group mb-4" id="at-gear-wrap">
+                <label for="exampleFormControlTextarea1">Deskripsi <span id="required">*</span></label>
+                <textarea class="form-control" required id="exampleFormControlTextarea1" rows="3" name="description">
+                    {!!$data['noise']['description']!!}
+                </textarea>
+            </div>
             <div class="mx-auto my-lg-4">
                 <div class="row justify-content-center mx-0">
                     <div class="col-6 text-center">
@@ -137,7 +143,9 @@
                     <input type="text" class="d-none" name="vidio">
                 </div>
             </div>
+            @if($data['noise']['confirmed'] == 2)
             <button type="submit" class="btn btn-primary w-100 rounded-lg">Ubah</button>
+            @endif
         </form>
     </div>
     <main>

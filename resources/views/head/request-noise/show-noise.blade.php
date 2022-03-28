@@ -25,7 +25,7 @@
             <div class="d-flex gap-4 justify-content-between align-items-start mx-0 mb-lg-4">
                 <div>
                     <p class="text-secondary">Jumlah Revisi</p>
-                    <h4s>{{count($data['noise']['revision'])}}</h4s>
+                    <h4>{{count($data['noise']['revision'])}}</h4>
                 </div>
                 <form action="{{route('head.request-noise.confirm',[
                         'noise_id' => $data['noise']['id']
@@ -72,6 +72,10 @@
                 <h4>{{$data['noise']['at_gear']}}</h4>
             </div>
             @endif
+            <div class="mt-4">
+                <p class="text-secondary mb-1">Deskripsi</p>
+                <h4>{{$data['noise']['description']}}</h4>
+            </div>
         </div>
     </div>
     <main>

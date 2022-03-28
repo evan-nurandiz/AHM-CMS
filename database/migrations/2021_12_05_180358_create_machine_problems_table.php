@@ -24,6 +24,7 @@ class CreateMachineProblemsTable extends Migration
             $table->string('method');
             $table->string('at_gear')->nullable();
             $table->string('vidio');
+            $table->longText('description');
             $table->boolean('confirmed')->default(0);
             $table->integer('assign_to');
             $table->timestamps();
